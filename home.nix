@@ -19,7 +19,6 @@ in
         graphite-cli
         cargo
         grc
-        meslo-lgs-nf # Font for Tide
     ];
 
 
@@ -55,6 +54,12 @@ in
                 signByDefault = vars ? git.gpgKey;
                 key = vars.git.gpgKey or null;
             };
+
+            # Allows for git difftool to work with vscode
+            extraConfig = {
+                diff.tool = "vscode";
+                "difftool \"vscode\"".cmd = "code --diff $LOCAL $REMOTE";
+            };
         };
     
         # Let Home Manager install and manage itself
@@ -65,6 +70,6 @@ in
     # VARIABLES
     home.sessionVariables = {
         NIXPKGS_ALLOW_UNFREE = "1";
-        EDITOR = "code";
+        EDITOR = "code --wait";
     };
 }

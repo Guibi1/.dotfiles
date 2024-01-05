@@ -1,0 +1,12 @@
+(include "./bar.yuck")
+(include "./power-menu.yuck")
+
+(defwidget icon [name ?size ?tooltip ?class]
+  (image
+    :path "./icons/${name}.svg"
+    :image-width {size ?: 20}
+    :image-height {size ?: 20}
+    :tooltip tooltip
+    :class class
+  )
+)

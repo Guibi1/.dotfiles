@@ -1,0 +1,39 @@
+@import "./theme.scss";
+
+.bar {
+    padding: 8px 16px;
+    background: transparentize($surface, 0.7);
+    border-top: 1px solid transparentize($overlay, 0.6);
+
+    .spacer-widget {
+        min-width: 2px;
+        margin: 0 4px;
+        border-radius: 4px;
+        background-color: $overlay;
+    }
+
+    .workspaces-widget {
+        image.empty {
+            opacity: 0.4;
+        }
+    }
+
+    .time-widget {
+        font-size: large;
+    }
+
+    .battery-widget {
+        min-height: 20px;
+        min-width: 20px;
+
+        circular-progress {
+            color: $teal;
+            background-color: $overlay;
+            border-radius: 10px;
+
+            &.low {
+                color: $red;
+            }
+        }
+    }
+}
