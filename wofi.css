@@ -1,0 +1,30 @@
+#window {
+    background-color: RGBA(19, 20, 28, 0.7);
+    color: #bfc9db;
+
+    border: 1px solid RGBA(100, 106, 115, 0.4);
+    border-radius: 8px;
+}
+
+#outer-box {
+    padding: 4px;
+}
+
+#input {
+    background: none;
+    border: 1px solid RGBA(241, 202, 145, 1);
+    margin: 4px;
+}
+
+#entry {
+    padding: 8px;
+    margin: 4px;
+}
+
+#entry:selected {
+    background: RGBA(241, 202, 145, .2);
+}
+
+#img {
+    border-radius: 999px;
+}

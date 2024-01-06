@@ -15,19 +15,59 @@ in
     ];
 
     programs = {
+        # Eww config
         eww = {
             enable = true;
             package = pkgs.eww-wayland;
             configDir = ./dotfiles/eww;
         };
 
+        # Wofi config
         wofi = {
             enable = true;
-            settings = {};
+            style = (builtins.readFile ./wofi.css);
+            settings = {
+                width="480px";
+                height="320px";
+                allow_images=true;
+            };
         };
 
         gpg = {
             enable = true;
+        };
+    };
+
+    services = {
+        # Mako config
+        mako = {
+            enable = true;
+
+            # Placement
+            width=400;
+            height=160;
+            margin="8";
+            padding="8";
+            anchor="bottom-right";
+
+            # General
+            font="Cascadia Code PL 12";
+            backgroundColor="#13141c66";
+            textColor="#bfc9db";
+            progressColor="#f1ca914D";
+            defaultTimeout=3000;
+
+            # Border
+            borderSize=1;
+            borderColor="#646a7366";
+            borderRadius=8;
+
+            extraConfig = ''
+                outer-margin=8
+
+                [urgency=high]
+                default-timeout=0
+            '';
         };
     };
 
@@ -36,7 +76,8 @@ in
 
     xdg = {
         enable = true;
-        
+
+        # .config symlinks
         configFile = {
             hypr.source = ./dotfiles/hypr;
         };
