@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+echo "Welcome to Guibi1's dotfiles"
+
+echo Cloning repo...
+nix-shell -p git --run "git clone https://github.com/Guibi1/dotfiles ~/nix-config"
+
+echo Switching NixOS to unstable channel...
+sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+
+echo Linking config and switching...
+sudo ln -sf ~/nix-config/configuration.nix /etc/nixos/configuration.nix
+sudo nixos-rebuild switch --upgrade
+
+echo Installing Home Manager...
+nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+nix-channel --update
+nix-shell '<home-manager>' -A install
+
+echo Linking config and switching...
+ln -sf ~/nix-config ~/.config/home-manager
+home-manager switch
+
+echo All done!
+echo You should probably reboot
