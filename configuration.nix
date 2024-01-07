@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
     imports = [
-      ./hardware-configuration.nix
+      /etc/nixos/hardware-configuration.nix
     ];
 
 
@@ -11,28 +11,19 @@
         consoleLogLevel = 2;
 
         loader = {
-             #efi.canTouchEfiVariables = true;
+            efi.canTouchEfiVariables = true;
+            timeout = 0;
 
-             grub = {
-                 enable = true;
-            # # useOSProber = true;
-                 efiSupport = true;
-                 device = "nodev";
-             };
-            #timeout = 3;
-            #efi.canTouchEfiVariables = true;
-
-            #systemd-boot = {
-             #   enable = true;
-              #  editor = false;
-               # configurationLimit = 10;
-            #};
+            systemd-boot = {
+               enable = true;
+               configurationLimit = 10;
+            };
         };
 
-    #    plymouth = {
-    #     enable = true;
-    #    theme = "breeze";
-    # };
+        plymouth = {
+            enable = true;
+            theme = "breeze";
+        };
     };
 
 
@@ -54,8 +45,8 @@
 
     # Programs options
     programs = {
-      hyprland.enable = true;
-      fish.enable = true;
+        hyprland.enable = true;
+        fish.enable = true;
     };
 
 
