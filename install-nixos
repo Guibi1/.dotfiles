@@ -28,9 +28,9 @@ if grep -q 'NAME=NixOS' /etc/os-release; then
     sudo ln -sf ~/nix-config/configuration.nix /etc/nixos/configuration.nix
     sudo nixos-rebuild switch --upgrade
 else
-    echo
+    echo You are not on NixOS, skipping Hyprland...
     nix-shell -p git --run "cd ~/nix-config && git update-index --skip-worktree hyprland.nix"
-    cp ~/nix-config/hyprland.nix ~/nix-config/hyprland.nix.disabled
+    sudo mv ~/nix-config/hyprland.nix ~/nix-config/hyprland.nix.disabled
 fi
 
 
@@ -45,7 +45,10 @@ fi
 
 
 echo Linking config and switching...
-ln -sf ~/nix-config ~/.config/home-manager
+sudo rm -rf ~/.config/home-manager
+sudo ln -sf ~/nix-config ~/.config/home-manager
+
+export NIXPKGS_ALLOW_UNFREE=1
 home-manager switch
 
 echo All done!
