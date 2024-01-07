@@ -22,12 +22,6 @@ in
     ];
 
 
-    # Dotfiles
-    home.file = {
-
-    };
-
-
     # Programs config
     programs = {
         # Fish shell config
