@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-    vars = import ./vars.nix;
+    vars = import ../vars.nix;
 in
 {
     imports = [ ./kitty.nix ./swaylock.nix ];
@@ -19,7 +19,7 @@ in
         eww = {
             enable = true;
             package = pkgs.eww-wayland;
-            configDir = ./dotfiles/eww;
+            configDir = ../dotfiles/eww;
         };
 
         # Wofi config
@@ -79,7 +79,7 @@ in
 
         # .config symlinks
         configFile = {
-            hypr.source = ./dotfiles/hypr;
+            hypr.source = ../dotfiles/hypr;
         };
     };
 

@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-    vars = import ./vars.nix;
+    vars = import ../vars.nix;
 in
 {
     # Add swaylock
@@ -47,5 +47,5 @@ in
 
     # Add swayidle
     home.packages = with pkgs; [ swayidle ];
-    xdg.configFile.swayidle.source = ./dotfiles/swayidle;            
+    xdg.configFile.swayidle.source = ../dotfiles/swayidle;            
 }

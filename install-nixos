@@ -4,12 +4,12 @@ echo "Welcome to Guibi1's dotfiles"
 
 echo Looking for Nix...
 if ! which nix-shell > /dev/null 2>&1; then
-  echo Nix is not installed. Running the install script and exiting.
-  sh <(curl -s -L https://nixos.org/nix/install) --daemon
-  echo Please open a new terminal and run this script again.
-  echo If nix couldn't install or w/e, here's the script to run 
-  echo sh <(curl -L https://nixos.org/nix/install) --daemon
-  exit 1
+    echo Nix is not installed. Running the install script and exiting.
+    sh <(curl -s -L https://nixos.org/nix/install) --daemon
+    echo Please open a new terminal and run this script again.
+    echo If nix couldn't install or w/e, here's the script to run 
+    echo sh <(curl -L https://nixos.org/nix/install) --daemon
+    exit 1
 fi
 
 echo "Nix is installed. Continuing with the rest of the script..."
@@ -25,7 +25,7 @@ if grep -q 'NAME=NixOS' /etc/os-release; then
     sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
 
     echo Linking config and switching...
-    sudo ln -sf ~/nix-config/configuration.nix /etc/nixos/configuration.nix
+    sudo ln -sf ~/nix-config/nixos-config.nix /etc/nixos/configuration.nix
     sudo nixos-rebuild switch --upgrade
 else
     echo You are not on NixOS, skipping Hyprland...
