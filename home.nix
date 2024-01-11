@@ -8,17 +8,17 @@ in
     home.homeDirectory = "/home/guibi";
     home.stateVersion = "23.11";
 
-    imports = [] ++ (tryImport ./hyprland.nix);
+    imports = [] ++ (tryImport ./hyprland.nix) ++ (tryImport ./node-global-packages.nix);
 
 
     # Packages to install
     home.packages = with pkgs; [
-        nano
+        grc # Fish plugin
         neofetch
-        bun
-        graphite-cli
+
+        # Dev env
+        bun 
         cargo
-        grc
     ];
 
 
