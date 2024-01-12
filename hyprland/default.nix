@@ -11,6 +11,7 @@ in
         vscode
         discord
         betterbird
+        nextcloud-client
         swww
     ];
 
