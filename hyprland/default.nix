@@ -75,8 +75,15 @@ in
     home.file = {
     };
 
+    # Configuration (mostly gnome)
+    dconf = {
+        enable = true;
+        settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+    };
+
     xdg = {
         enable = true;
+        userDirs.createDirectories = true;
 
         # .config symlinks
         configFile = {
@@ -94,10 +101,12 @@ in
                 variant = "mocha";
             });
         };
-        cursorTheme = {
-            name = "mochaLight";
-            package = pkgs.catppuccin-cursors;
-            size = 24;
-        };
+    };
+
+    home.pointerCursor = {
+        gtk.enable = true;
+        package = pkgs.bibata-cursors;
+        name = "Bibata-Modern-Classic";
+        size = 20;
     };
 }

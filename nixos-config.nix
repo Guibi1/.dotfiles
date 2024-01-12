@@ -111,6 +111,7 @@ in
 
     # Programs options
     programs = {
+        dconf.enable = true;
         hyprland.enable = true;
         fish.enable = true;
     };
