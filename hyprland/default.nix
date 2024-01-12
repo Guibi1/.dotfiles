@@ -12,7 +12,7 @@ in
         discord
         betterbird
         nextcloud-client
-        swww
+        dex wl-clip-persist swww
     ];
 
     programs = {
