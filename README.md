@@ -1,5 +1,7 @@
 # Home manager and NixOS dotfiles
 
+My all in one linux environment and desktop rice !
+
 ## Installation
 
 You can either follow along (i'll assume you clone this to `~/nix-config`), or run this one-liner (you _can_ omit the https if you aren't copy-pasting):
@@ -19,7 +21,7 @@ sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
 Then, link the configuration file to `/etc/nixos/` and rebuild.
 
 ```bash
-sudo ln -sf ~/nix-config/configuration.nix /etc/nixos/configuration.nix
+sudo ln -sf ~/nix-config/nixos-config.nix /etc/nixos/configuration.nix
 sudo nixos-rebuild switch --upgrade
 ```
 
@@ -40,4 +42,13 @@ Now, you can link the entire repo to `.config/home-manager`, as god intended.
 ```bash
 ln -sf ~/nix-config ~/.config/home-manager
 home-manager switch
+```
+
+### Git signing
+
+This clearly has nothing to do here, but use these commands to import and see the key that git can use.
+
+```bash
+gpg --import private.gpg
+gpg -K --keyid-format=long
 ```
