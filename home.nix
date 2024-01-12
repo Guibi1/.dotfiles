@@ -61,7 +61,7 @@ in
     };
 
 
-    # VARIABLES
+    # Env variables
     home.sessionVariables = {
         NIXPKGS_ALLOW_UNFREE = "1";
         EDITOR = "code --wait";

@@ -103,10 +103,16 @@ in
         };
     };
 
+    # Cursor pointer
     home.pointerCursor = {
         gtk.enable = true;
         package = pkgs.bibata-cursors;
         name = "Bibata-Modern-Classic";
         size = 20;
+    };
+
+    # Env variables
+    home.sessionVariables = {
+        NIXOS_OZONE_WL = "1";
     };
 }
