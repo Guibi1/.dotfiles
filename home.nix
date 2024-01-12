@@ -1,14 +1,14 @@
-args@{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 let
     vars = import ./vars.nix;
-    tryImport = file: lib.optional (builtins.pathExists file) file;
+    importIf = file: enable: lib.optional enable file;
 in
 {
     home.username = "guibi";
     home.homeDirectory = "/home/guibi";
     home.stateVersion = "23.11";
 
-    imports = [] ++ (tryImport ./hyprland) ++ (tryImport ./node-global-packages);
+    imports = [./node-global-packages] ++ (importIf ./hyprland vars.enableHyprland);
 
 
     # Packages to install
@@ -17,7 +17,7 @@ in
         neofetch
 
         # Dev env
-        bun 
+        bun nodejs_20
         cargo
     ];
 
@@ -39,7 +39,7 @@ in
 
         # Git config
         git = {
-            enable = true;
+            enable = vars.git.enable or false;
             userName = "Laurent Stéphenne";
             userEmail = "laurent@guibi.ca";
 
