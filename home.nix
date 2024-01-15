@@ -19,6 +19,7 @@ in
         # Dev env
         bun nodejs_20
         cargo
+        gnumake gcc
     ];
 
 

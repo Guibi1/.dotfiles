@@ -6,12 +6,20 @@ in
     imports = [ ./kitty.nix ./swaylock.nix ];
 
     home.packages = with pkgs; [
+        # Desktop utilities
+        networkmanagerapplet
         gnome.nautilus
+        gnome.file-roller
+
+        # Programs
         firefox
         vscode
         discord
         betterbird
         nextcloud-client
+
+        # Hyprland specific
+        grimblast
         dex wl-clip-persist swww
     ];
 
@@ -108,7 +116,7 @@ in
         gtk.enable = true;
         package = pkgs.bibata-cursors;
         name = "Bibata-Modern-Classic";
-        size = 20;
+        size = 14;
     };
 
     # Env variables

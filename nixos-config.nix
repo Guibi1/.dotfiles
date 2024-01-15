@@ -106,6 +106,7 @@ in
         polkit_gnome
         jq socat xdg-utils
         brightnessctl
+        networkmanager-openconnect
     ];
 
 
@@ -151,7 +152,7 @@ in
             enable = true;
             settings = rec {
                 initial_session = {
-                    command = "${pkgs.hyprland}/bin/Hyprland";
+                    command = "${pkgs.hyprland}/bin/Hyprland > /dev/null";
                     user = "guibi";
                 };
                 default_session = initial_session;
