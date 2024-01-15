@@ -48,6 +48,8 @@ in
     };
 
     services = {
+        ssh-agent.enable = true;
+
         # Mako config
         mako = {
             enable = true;
