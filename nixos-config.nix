@@ -188,6 +188,19 @@ in
     };
 
 
+    # Fonts
+    fonts.packages = with pkgs; [
+        cascadia-code
+        (nerdfonts.override { fonts = [ "FiraCode" ]; })
+        noto-fonts
+        noto-fonts-cjk
+        noto-fonts-emoji
+        liberation_ttf
+        dina-font
+        proggyfonts
+    ];
+
+
     # Locale options
     console.keyMap = "cf";
     time.timeZone = "America/Toronto";
