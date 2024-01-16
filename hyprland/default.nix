@@ -97,6 +97,7 @@ in
 
         # .config symlinks
         configFile = {
+            "neofetch/config.conf".source = ../dotfiles/neofetch.conf;
             hypr.source = ../dotfiles/hypr;
         };
     };
