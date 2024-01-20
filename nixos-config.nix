@@ -29,6 +29,25 @@ in
         };
     };
 
+    powerManagement.enable = true;
+
+    # Bluetooth options 
+    hardware = {
+        bluetooth = {
+            enable = true;
+            powerOnBoot = true;
+            settings.General = {
+                Enable = "Source,Sink,Media,Socket";
+                Experimental = true;
+            };    
+        };
+
+        # pulseaudio = {
+        #     enable = true;
+        #     package = pkgs.pulseaudioFull;
+        # };
+    };
+
 
     # Networking options
     networking = {
@@ -138,6 +157,12 @@ in
 
         # Mount, trash... for the file explorer
         gvfs.enable = true;
+
+        # Bluetooth control
+        blueman.enable = true;
+
+        # CPU power management
+        auto-cpufreq.enable = true;
 
         # Start Pipewire (audio)
         pipewire = {
