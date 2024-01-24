@@ -10,6 +10,7 @@ in
         networkmanagerapplet
         gnome.nautilus
         gnome.file-roller
+        gnome.seahorse
 
         # Programs
         firefox
@@ -48,8 +49,6 @@ in
     };
 
     services = {
-        ssh-agent.enable = true;
-
         # Mako config
         mako = {
             enable = true;

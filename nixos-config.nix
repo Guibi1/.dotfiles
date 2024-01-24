@@ -187,8 +187,10 @@ in
     security = {
         polkit.enable = true;
         rtkit.enable = true;
-        pam.services.swaylock = {
-            enableGnomeKeyring = true;
+
+        pam.services = {
+            login.enableGnomeKeyring = true;
+            swaylock.enableGnomeKeyring = true;
         };
     };
 
@@ -207,6 +209,12 @@ in
                 TimeoutStopSec = 10;
             };
         };
+    };
+
+
+    # Session variables
+    environment.sessionVariables = {
+        SSH_AUTH_SOCK = "/run/user/$(id -u)/keyring/ssh";
     };
 
 
