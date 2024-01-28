@@ -42,10 +42,6 @@ in
                 allow_images=true;
             };
         };
-
-        gpg = {
-            enable = true;
-        };
     };
 
     services = {

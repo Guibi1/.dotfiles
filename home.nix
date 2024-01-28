@@ -56,6 +56,10 @@ in
                 "difftool \"vscode\"".cmd = "code --diff $LOCAL $REMOTE";
             };
         };
+
+        gpg = {
+            enable = true;
+        };
     
         # Let Home Manager install and manage itself
         home-manager.enable = true;
