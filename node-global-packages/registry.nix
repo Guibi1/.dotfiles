@@ -235,10 +235,10 @@ in
   "@withgraphite/graphite-cli" = nodeEnv.buildNodePackage {
     name = "_at_withgraphite_slash_graphite-cli";
     packageName = "@withgraphite/graphite-cli";
-    version = "1.0.14";
+    version = "1.1.2";
     src = fetchurl {
-      url = "https://registry.npmjs.org/@withgraphite/graphite-cli/-/graphite-cli-1.0.14.tgz";
-      sha512 = "VXgUM5RSYXMVc9i3E1A6j0CYNS5ScQjUXaKO9l3epOws5rxiyDa7QOl7tiSXTQw1eQKtzXxiwve+iWDZsPSDQw==";
+      url = "https://registry.npmjs.org/@withgraphite/graphite-cli/-/graphite-cli-1.1.2.tgz";
+      sha512 = "nkD9JYrfOtG+xYO1lvMKCRNZ0G2tF4Zv7AcA9OxLYZSr7kRQRfYjmmieiTtju7jrhorMrFfdg5yh0lwVxM7eow==";
     };
     dependencies = [
       sources."ansi-regex-5.0.1"
