@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+clear
+echo "Welcome to Guibi1's dotfiles"
+
+echo "Looking for Nix..."
+if ! which nix-shell > /dev/null 2>&1; then
+    echo "Nix is not installed. Running the install script and exiting."
+    sh <(curl -fsSL https://nixos.org/nix/install) --daemon
+    echo "Please open a new terminal and run this script again."
+    echo "If nix couldn't install or w/e, here's the script to run "
+    echo "sh <(curl -fsSL https://nixos.org/nix/install) --daemon"
+    exit 1
+fi
+
+echo "Nix is installed. Continuing with the rest of the script..."
+echo ""
+
+echo "Cloning repo..."
+nix-shell -p git --run "git clone https://github.com/Guibi1/.dotfiles ~/nix-config"
+
+cp ~/nix-config/vars.exemple.nix ~/nix-config/vars.nix 
+nano ~/nix-config/vars.nix
+clear
+echo "Vars editing complete!"
+echo ""
+
+if grep -q 'NAME=NixOS' /etc/os-release; then
+    echo "You are running NixOS!"
+
+    echo "Switching NixOS to unstable channel..."
+    sudo nix-channel --quiet --add https://nixos.org/channels/nixos-unstable nixos
+
+    echo "Linking config and switching..."
+    sudo ln -sf ~/nix-config/nixos-config.nix /etc/nixos/configuration.nix
+    sudo nixos-rebuild switch --upgrade
+else
+    echo "You are not on NixOS, skipping nixos-config..."
+    echo "I hope you disabled Hyprland!"
+    sleep 5
+fi
+
+echo ""
+if which home-manager &> /dev/null ; then
+    echo "Home Manager is already installed!"
+else
+    echo "Installing Home Manager..."
+    nix-channel --quiet --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+    nix-channel --quiet --update
+    nix-shell '<home-manager>' -A install
+fi
+
+
+echo "Linking config and switching..."
+sudo rm -rf ~/.config/home-manager
+sudo ln -sf ~/nix-config ~/.config/home-manager
+
+export NIXPKGS_ALLOW_UNFREE=1
+home-manager switch
+
+echo "All done!"
+echo "You should probably reboot"
