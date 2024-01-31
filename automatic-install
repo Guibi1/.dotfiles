@@ -58,5 +58,7 @@ sudo ln -sf ~/nix-config ~/.config/home-manager
 export NIXPKGS_ALLOW_UNFREE=1
 home-manager switch
 
+fish -c "tide configure --auto --style=Lean --prompt_colors='True color' --show_time=No --lean_prompt_height='Two lines' --prompt_connection=Dotted --prompt_connection_andor_frame_color=Dark --prompt_spacing=Sparse --icons='Few icons' --transient=Yes"
+
 echo "All done!"
 echo "You should probably reboot"
