@@ -40,6 +40,8 @@ in
                 width="480px";
                 height="320px";
                 allow_images=true;
+                image_size="24px";
+                prompt="Ouvrir";
             };
         };
     };
@@ -105,6 +107,12 @@ in
                 accents = [ "red" ];
                 size = "standard";
                 variant = "mocha";
+            });
+        };
+        iconTheme = {
+            name = "Tela-circle-black";
+            package = (pkgs.tela-circle-icon-theme.override {
+                colorVariants = [ "black" "pink" ];
             });
         };
     };
