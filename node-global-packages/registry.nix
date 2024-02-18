@@ -76,13 +76,13 @@ let
         sha512 = "MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==";
       };
     };
-    "escalade-3.1.1" = {
+    "escalade-3.1.2" = {
       name = "escalade";
       packageName = "escalade";
-      version = "3.1.1";
+      version = "3.1.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/escalade/-/escalade-3.1.1.tgz";
-        sha512 = "k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==";
+        url = "https://registry.npmjs.org/escalade/-/escalade-3.1.2.tgz";
+        sha512 = "ErCHMCae19vR8vQGe50xIsVomy19rg6gFu3+r3jkEO46suLMWBksvVyoGgQV+jOfl84ZSOSlmv6Gxa89PmTGmA==";
       };
     };
     "get-caller-file-2.0.5" = {
@@ -235,10 +235,10 @@ in
   "@withgraphite/graphite-cli" = nodeEnv.buildNodePackage {
     name = "_at_withgraphite_slash_graphite-cli";
     packageName = "@withgraphite/graphite-cli";
-    version = "1.1.2";
+    version = "1.1.5";
     src = fetchurl {
-      url = "https://registry.npmjs.org/@withgraphite/graphite-cli/-/graphite-cli-1.1.2.tgz";
-      sha512 = "nkD9JYrfOtG+xYO1lvMKCRNZ0G2tF4Zv7AcA9OxLYZSr7kRQRfYjmmieiTtju7jrhorMrFfdg5yh0lwVxM7eow==";
+      url = "https://registry.npmjs.org/@withgraphite/graphite-cli/-/graphite-cli-1.1.5.tgz";
+      sha512 = "4IlCUQ/uCsa1eTea9E3sQdJd/SOcgdM/CJH8SlAxW6frxqurkSfBZ63PHnWvxwj+PRkpM4pms/UHaS7YFVsZjQ==";
     };
     dependencies = [
       sources."ansi-regex-5.0.1"
@@ -249,7 +249,7 @@ in
       sources."color-convert-2.0.1"
       sources."color-name-1.1.4"
       sources."emoji-regex-8.0.0"
-      sources."escalade-3.1.1"
+      sources."escalade-3.1.2"
       sources."get-caller-file-2.0.5"
       sources."has-flag-4.0.0"
       sources."is-fullwidth-code-point-3.0.0"
