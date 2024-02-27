@@ -42,7 +42,7 @@ in
         git = {
             enable = vars.git.enable or false;
             userName = "Laurent Stéphenne";
-            userEmail = "laurent@guibi.ca";
+            userEmail = "laurent@guibi.dev";
 
             # Enable gpg signing if possible
             signing = {
