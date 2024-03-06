@@ -112,6 +112,15 @@ let
         sha512 = "zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==";
       };
     };
+    "lru-cache-6.0.0" = {
+      name = "lru-cache";
+      packageName = "lru-cache";
+      version = "6.0.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/lru-cache/-/lru-cache-6.0.0.tgz";
+        sha512 = "Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==";
+      };
+    };
     "node-gyp-build-4.8.0" = {
       name = "node-gyp-build";
       packageName = "node-gyp-build";
@@ -128,6 +137,15 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/require-directory/-/require-directory-2.1.1.tgz";
         sha512 = "fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==";
+      };
+    };
+    "semver-7.6.0" = {
+      name = "semver";
+      packageName = "semver";
+      version = "7.6.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/semver/-/semver-7.6.0.tgz";
+        sha512 = "EnwXhrlwXMk9gKu5/flx5sv/an57AkRplG3hTK68W7FRDN+k+OWBj65M7719OkA82XLBxrcX0KSHj+X5COhOVg==";
       };
     };
     "string-width-4.2.3" = {
@@ -193,6 +211,15 @@ let
         sha512 = "0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA==";
       };
     };
+    "yallist-4.0.0" = {
+      name = "yallist";
+      packageName = "yallist";
+      version = "4.0.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/yallist/-/yallist-4.0.0.tgz";
+        sha512 = "3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==";
+      };
+    };
     "yargs-17.7.2" = {
       name = "yargs";
       packageName = "yargs";
@@ -217,10 +244,10 @@ in
   typescript = nodeEnv.buildNodePackage {
     name = "typescript";
     packageName = "typescript";
-    version = "5.3.3";
+    version = "5.4.2";
     src = fetchurl {
-      url = "https://registry.npmjs.org/typescript/-/typescript-5.3.3.tgz";
-      sha512 = "pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==";
+      url = "https://registry.npmjs.org/typescript/-/typescript-5.4.2.tgz";
+      sha512 = "+2/g0Fds1ERlP6JsakQQDXjZdZMM+rqpamFZJEKh4kwTIn3iDkgKtby0CeNd5ATNZ4Ry1ax15TMx0W2V+miizQ==";
     };
     buildInputs = globalBuildInputs;
     meta = {
@@ -235,10 +262,10 @@ in
   "@withgraphite/graphite-cli" = nodeEnv.buildNodePackage {
     name = "_at_withgraphite_slash_graphite-cli";
     packageName = "@withgraphite/graphite-cli";
-    version = "1.2.3";
+    version = "1.2.5";
     src = fetchurl {
-      url = "https://registry.npmjs.org/@withgraphite/graphite-cli/-/graphite-cli-1.2.3.tgz";
-      sha512 = "xbBfAq9ycDJAqxRVB9/QIdDbpLVlpGifs6He0eJPadxN4aeaGY5PfJw+uZQbjgY5jhuwgl6DRIYlcNAJeX9f6A==";
+      url = "https://registry.npmjs.org/@withgraphite/graphite-cli/-/graphite-cli-1.2.5.tgz";
+      sha512 = "ZfN2K2/a/XSObM8o/Ch6iA1ajlDSCvXflEFU36uDRicaEpu/S+VqkKNVm3BQwuYgNCmtVs+gHSacOnqZhpQPlA==";
     };
     dependencies = [
       sources."ansi-regex-5.0.1"
@@ -253,8 +280,10 @@ in
       sources."get-caller-file-2.0.5"
       sources."has-flag-4.0.0"
       sources."is-fullwidth-code-point-3.0.0"
+      sources."lru-cache-6.0.0"
       sources."node-gyp-build-4.8.0"
       sources."require-directory-2.1.1"
+      sources."semver-7.6.0"
       sources."string-width-4.2.3"
       sources."strip-ansi-6.0.1"
       sources."supports-color-7.2.0"
@@ -262,6 +291,7 @@ in
       sources."wrap-ansi-7.0.0"
       sources."ws-8.16.0"
       sources."y18n-5.0.8"
+      sources."yallist-4.0.0"
       sources."yargs-17.7.2"
       sources."yargs-parser-21.1.1"
     ];
