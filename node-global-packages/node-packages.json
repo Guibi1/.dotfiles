@@ -1,4 +1,6 @@
 [
     "typescript",
-    "@withgraphite/graphite-cli"
+    "eslint",
+    "@withgraphite/graphite-cli",
+    "@xata.io/cli"
 ]
