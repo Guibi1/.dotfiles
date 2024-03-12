@@ -54,6 +54,7 @@ in
             extraConfig = {
                 diff.tool = "vscode";
                 "difftool \"vscode\"".cmd = "code --diff $LOCAL $REMOTE";
+                pull.rebase = true;
             };
         };
 
