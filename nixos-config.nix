@@ -164,6 +164,9 @@ in
         # CPU power management
         auto-cpufreq.enable = true;
 
+        # Fingerprint
+        fprintd.enable = true;
+
         # Start Pipewire (audio)
         pipewire = {
             enable = true;
@@ -190,7 +193,7 @@ in
 
         pam.services = {
             login.enableGnomeKeyring = true;
-            swaylock.enableGnomeKeyring = true;
+            hyprlock.enableGnomeKeyring = true;
         };
     };
 

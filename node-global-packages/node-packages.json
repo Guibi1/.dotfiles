@@ -2,5 +2,5 @@
     "typescript",
     "eslint",
     "@withgraphite/graphite-cli",
-    "@xata.io/cli"
+    "@biomejs/biome"
 ]

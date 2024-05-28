@@ -30,7 +30,7 @@
     :halign "center"
     :valign "center"
     (icon-button
-      :command "swaylock"
+      :command "hyprlock"
       :icon "lock"
       :tooltip "Verrouiller"
     )

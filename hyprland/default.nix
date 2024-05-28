@@ -3,7 +3,7 @@ let
     vars = import ../vars.nix;
 in
 {
-    imports = [ ./kitty.nix ./swaylock.nix ];
+    imports = [ ./kitty.nix ./waybar ];
 
     home.packages = with pkgs; [
         # Desktop utilities
@@ -18,9 +18,12 @@ in
         discord
         betterbird
         nextcloud-client
+        gimp
 
         # Hyprland specific
+        hyprlock hypridle
         grimblast
+        rofi-wayland
         dex wl-clip-persist swww
     ];
 
@@ -28,21 +31,7 @@ in
         # Eww config
         eww = {
             enable = true;
-            package = pkgs.eww-wayland;
             configDir = ../dotfiles/eww;
-        };
-
-        # Wofi config
-        wofi = {
-            enable = true;
-            style = (builtins.readFile ./wofi.css);
-            settings = {
-                width="480px";
-                height="320px";
-                allow_images=true;
-                image_size="24px";
-                prompt="Ouvrir";
-            };
         };
     };
 
@@ -52,23 +41,23 @@ in
             enable = true;
 
             # Placement
-            width=400;
-            height=160;
-            margin="8";
-            padding="8";
-            anchor="bottom-right";
+            width = 400;
+            height = 160;
+            margin = "8";
+            padding = "8";
+            anchor = "bottom-right";
 
             # General
-            font="Cascadia Code PL 12";
-            backgroundColor="#13141c66";
-            textColor="#bfc9db";
-            progressColor="#f1ca914D";
-            defaultTimeout=3000;
+            font = "Cascadia Code PL 14";
+            backgroundColor = "#13141c66";
+            textColor = "#bfc9db";
+            progressColor = "#f1ca914D";
+            defaultTimeout = 3000;
 
             # Border
-            borderSize=1;
-            borderColor="#646a7366";
-            borderRadius=8;
+            borderSize = 1;
+            borderColor = "#646a7366";
+            borderRadius = 8;
 
             extraConfig = ''
                 outer-margin=8
@@ -94,8 +83,7 @@ in
 
         # .config symlinks
         configFile = {
-            "neofetch/config.conf".source = ../dotfiles/neofetch.conf;
-            hypr.source = ../dotfiles/hypr;
+            # hypr.source = ../dotfiles/hypr;
         };
     };
 
@@ -122,7 +110,7 @@ in
         gtk.enable = true;
         package = pkgs.bibata-cursors;
         name = "Bibata-Modern-Classic";
-        size = 14;
+        size = 20;
     };
 
     # Env variables

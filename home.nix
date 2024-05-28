@@ -14,12 +14,14 @@ in
     # Packages to install
     home.packages = with pkgs; [
         grc # Fish plugin
-        neofetch
+        fastfetch
 
         # Dev env
-        bun nodejs_20
-        cargo
-        gnumake gcc
+        bun nodejs_20 # TypeScript
+        rustc cargo # Rust
+        nixd # Nix
+        python3 ruff # Python
+        gnumake gcc # C
     ];
 
 
@@ -29,7 +31,9 @@ in
         fish = {
             enable = true;
             interactiveShellInit = ''
-                set fish_greeting # Disable greeting
+                function fish_greeting
+                    fastfetch -c ~/.config/fastfetch/greeting.jsonc
+                end
             '';
             plugins = [
                 { name = "grc"; src = pkgs.fishPlugins.grc.src; }
@@ -64,6 +68,15 @@ in
     
         # Let Home Manager install and manage itself
         home-manager.enable = true;
+    };
+
+    xdg = {
+        enable = true;
+
+        # .config symlinks
+        configFile = {
+            fastfetch.source = ./dotfiles/fastfetch;
+        };
     };
 
 
