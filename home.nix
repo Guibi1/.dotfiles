@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 let
     vars = import ./vars.nix;
     importIf = file: enable: lib.optional enable file;
@@ -17,11 +17,11 @@ in
         fastfetch
 
         # Dev env
-        bun nodejs_20 # TypeScript
-        rustc cargo # Rust
+        bun nodejs_22 # TypeScript
+        # rustup # Rust
         nixd # Nix
         python3 ruff # Python
-        gnumake gcc # C
+        # gnumake gcc # C
     ];
 
 
