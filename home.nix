@@ -13,15 +13,17 @@ in
 
     # Packages to install
     home.packages = with pkgs; [
-        grc # Fish plugin
         fastfetch
+
+        # Fish/Terminal
+        grc fzf
 
         # Dev env
         bun nodejs_22 # TypeScript
-        # rustup # Rust
+        rustup # Rust
         nixd # Nix
         python3 ruff # Python
-        # gnumake gcc # C
+        # gnumake gcc # C++
     ];
 
 
@@ -40,6 +42,14 @@ in
                 { name = "tide"; src = pkgs.fishPlugins.tide.src; }
                 { name = "pisces"; src = pkgs.fishPlugins.pisces.src; }
             ];
+        };
+
+        # Zoxide (cd replacement)
+        zoxide = {
+            enable = true;
+            options = ["--cmd cd"];
+            enableBashIntegration= true;
+            enableFishIntegration = true;
         };
 
         # Git config
