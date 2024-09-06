@@ -23,7 +23,8 @@ in
         rustup # Rust
         nixd # Nix
         python3 ruff # Python
-        # gnumake gcc # C++
+        openjdk21_headless quarkus # Java
+        gnumake gcc # C++
     ];
 
 
