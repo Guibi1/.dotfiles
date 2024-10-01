@@ -7,7 +7,7 @@ My all in one linux environment and desktop rice !
 You can either follow along (i'll assume you clone this to `~/nix-config`), or run this one-liner (you _can_ omit the https if you aren't copy-pasting):
 
 ```bash
-bash <(curl -fsSL https://t.ly/uTL2W)
+bash <(curl -fsSL https://go.ly/nixos)
 ```
 
 ### NixOS
