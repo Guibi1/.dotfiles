@@ -165,7 +165,7 @@ in
         auto-cpufreq.enable = true;
 
         # Fingerprint
-        fprintd.enable = true;
+        fprintd.enable = vars.enable-fprint or false;
 
         # Start Pipewire (audio)
         pipewire = {

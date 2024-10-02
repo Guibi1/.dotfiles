@@ -4,11 +4,11 @@ clear
 echo "Welcome to Guibi1's dotfiles"
 
 echo "Looking for Nix..."
-if ! which nix-shell > /dev/null 2>&1; then
+if ! command -v nix > /dev/null 2>&1; then
     echo "Nix is not installed. Running the install script and exiting."
     sh <(curl -fsSL https://nixos.org/nix/install) --daemon
     echo "Please open a new terminal and run this script again."
-    echo "If nix couldn't install or w/e, here's the script to run "
+    echo "If nix couldn't install or w/e, here's the script to run:"
     echo "sh <(curl -fsSL https://nixos.org/nix/install) --daemon"
     exit 1
 fi
@@ -41,7 +41,7 @@ else
 fi
 
 echo ""
-if which home-manager &> /dev/null ; then
+if command -v home-manager &> /dev/null ; then
     echo "Home Manager is already installed!"
 else
     echo "Installing Home Manager..."
@@ -50,10 +50,9 @@ else
     nix-shell '<home-manager>' -A install
 fi
 
-
-echo "Linking config and switching..."
-sudo rm -rf ~/.config/home-manager
-sudo ln -sf ~/nix-config ~/.config/home-manager
+echo "Linking Home Manager config and switching..."
+rm -rf ~/.config/home-manager
+ln -sf ~/nix-config ~/.config/home-manager
 
 export NIXPKGS_ALLOW_UNFREE=1
 home-manager switch
