@@ -8,7 +8,7 @@ in
     home.homeDirectory = "/home/guibi";
     home.stateVersion = "23.11";
 
-    imports = [./node-global-packages] ++ (importIf ./hyprland vars.enableHyprland);
+    imports = [./node-global-packages] ++ (importIf ./hyprland vars.enable-hyprland);
 
 
     # Packages to install

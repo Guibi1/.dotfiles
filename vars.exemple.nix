@@ -8,7 +8,7 @@
         gpgKey = "";
     };
 
-    enableHyprland = false;
+    enable-hyprland = false;
 
 
     ### NIX OS ###

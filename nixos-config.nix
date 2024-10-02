@@ -132,7 +132,7 @@ in
     # Programs options
     programs = {
         dconf.enable = true;
-        hyprland.enable = true;
+        hyprland.enable = vars.enable-hyprland or false;
         fish.enable = true;
     };
 
@@ -177,7 +177,7 @@ in
         
         # Auto start Hyprland on TTY1
         greetd = {
-            enable = true;
+            enable = vars.enable-hyprland or false;
             settings.default_session = {
                 command = "${pkgs.hyprland}/bin/Hyprland &> /dev/null";
                 user = "guibi";
