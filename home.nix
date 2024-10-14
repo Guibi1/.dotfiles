@@ -22,7 +22,7 @@ in
         bun nodejs_22 # TypeScript
         rustup # Rust
         nixd # Nix
-        python3 ruff # Python
+        python3Full ruff # Python
         openjdk21_headless quarkus # Java
         gnumake gcc # C++
     ];
