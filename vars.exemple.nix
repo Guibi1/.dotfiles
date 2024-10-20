@@ -1,6 +1,8 @@
 {
     ### HOME MANAGER ###
 
+    home-dir = "/home/guibi";
+
     git = {
         # If git should be enabled
         enable = true;

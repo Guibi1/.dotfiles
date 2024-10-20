@@ -5,6 +5,7 @@ in
 {
     imports = [
         /etc/nixos/hardware-configuration.nix
+        <home-manager/nixos>
     ];
 
 
@@ -148,6 +149,7 @@ in
             packages = with pkgs; [];
         };
     };
+    home-manager.users.guibi = import ./home.nix;
 
 
     # Services options

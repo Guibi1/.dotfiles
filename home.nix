@@ -5,7 +5,7 @@ let
 in
 {
     home.username = "guibi";
-    home.homeDirectory = "/home/guibi";
+    home.homeDirectory = vars.home-dir;
     home.stateVersion = "23.11";
 
     imports = [./node-global-packages] ++ (importIf ./hyprland vars.enable-hyprland);
@@ -23,7 +23,7 @@ in
         rustup # Rust
         nixd # Nix
         python3Full ruff # Python
-        openjdk21_headless quarkus # Java
+        openjdk21_headless quarkus jdt-language-server # Java
         gnumake gcc # C++
     ];
 

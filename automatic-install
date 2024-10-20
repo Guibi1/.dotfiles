@@ -30,6 +30,8 @@ if grep -q 'NAME=NixOS' /etc/os-release; then
 
     echo "Switching NixOS to unstable channel..."
     sudo nix-channel --quiet --add https://nixos.org/channels/nixos-unstable nixos
+    sudo nix-channel --quiet --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+    sudo nix-channel --update
 
     echo "Linking config and switching..."
     sudo ln -sf ~/nix-config/nixos-config.nix /etc/nixos/configuration.nix
@@ -37,19 +39,20 @@ if grep -q 'NAME=NixOS' /etc/os-release; then
 else
     echo "You are not on NixOS, skipping nixos-config..."
     echo "I hope you disabled Hyprland!"
+    echo ""
     sleep 5
+
+    if command -v home-manager &> /dev/null ; then
+        echo "Home Manager is already installed!"
+    else
+        echo "Installing Home Manager..."
+        nix-channel --quiet --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+        nix-channel --quiet --update
+        nix-shell '<home-manager>' -A install
+    fi
 fi
 
 echo ""
-if command -v home-manager &> /dev/null ; then
-    echo "Home Manager is already installed!"
-else
-    echo "Installing Home Manager..."
-    nix-channel --quiet --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-    nix-channel --quiet --update
-    nix-shell '<home-manager>' -A install
-fi
-
 echo "Linking Home Manager config and switching..."
 rm -rf ~/.config/home-manager
 ln -sf ~/nix-config ~/.config/home-manager
