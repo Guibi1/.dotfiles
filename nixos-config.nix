@@ -185,6 +185,18 @@ in
                 user = "guibi";
             };
         };
+
+        openssh = {
+            enable = vars.server or false;
+            ports = [ 22 ];
+            settings = {
+                PasswordAuthentication = true;
+                AllowUsers = [ "guibi" ]; # Allows all users by default. Can be [ "user1" "user2" ]
+                UseDns = true;
+                X11Forwarding = false;
+                PermitRootLogin = "prohibit-password"; # "yes", "without-password", "prohibit-password", "forced-commands-only", "no"
+            };
+        };
     };
 
 
