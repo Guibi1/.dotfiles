@@ -49,7 +49,7 @@ in
         zoxide = {
             enable = true;
             options = ["--cmd cd"];
-            enableBashIntegration= true;
+            enableBashIntegration = true;
             enableFishIntegration = true;
         };
 
@@ -94,6 +94,6 @@ in
     # Env variables
     home.sessionVariables = {
         NIXPKGS_ALLOW_UNFREE = "1";
-        EDITOR = "code --wait";
+        EDITOR = if vars.enable-hyprland then "code --wait" else "nano";
     };
 }

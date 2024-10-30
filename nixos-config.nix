@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
     vars = import ./vars.nix;
 in
@@ -6,7 +6,7 @@ in
     imports = [
         /etc/nixos/hardware-configuration.nix
         <home-manager/nixos>
-    ];
+    ] ++ (lib.optional vars.server ./server.nix);
 
 
     # Boot options.
@@ -52,7 +52,7 @@ in
 
     # Networking options
     networking = {
-        hostName = "Hermes"; # Define your hostname.
+        hostName = vars.hostname;
 
         networkmanager = {
             enable = true;
@@ -185,18 +185,6 @@ in
                 user = "guibi";
             };
         };
-
-        openssh = {
-            enable = vars.server or false;
-            ports = [ 22 ];
-            settings = {
-                PasswordAuthentication = true;
-                AllowUsers = [ "guibi" ]; # Allows all users by default. Can be [ "user1" "user2" ]
-                UseDns = true;
-                X11Forwarding = false;
-                PermitRootLogin = "prohibit-password"; # "yes", "without-password", "prohibit-password", "forced-commands-only", "no"
-            };
-        };
     };
 
 
@@ -216,6 +204,7 @@ in
     systemd = {
         # Start Polkit-Gnome
         user.services.polkit-gnome-authentication-agent-1 = {
+            enable = vars.enable-hyprland or false;
             description = "polkit-gnome-authentication-agent-1";
             wantedBy = [ "default.target" ];
             serviceConfig = {
@@ -240,7 +229,6 @@ in
         cascadia-code
         (nerdfonts.override { fonts = [ "FiraCode" ]; })
         noto-fonts
-        noto-fonts-cjk
         noto-fonts-emoji
         liberation_ttf
         dina-font
