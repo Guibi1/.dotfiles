@@ -36,7 +36,7 @@ if grep -q 'NAME=NixOS' /etc/os-release; then
     echo "Linking config and switching..."
     sudo ln -sf ~/nix-config/nixos-config.nix /etc/nixos/configuration.nix
     sudo nixos-rebuild switch --upgrade
-elif ;then
+elif [[ "$(uname)" == "Darwin" ]]; then
     echo "You are on MacOS!"
     echo "I hope you disabled Hyprland!"
     echo ""
