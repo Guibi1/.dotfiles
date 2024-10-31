@@ -19,7 +19,7 @@ echo ""
 echo "Cloning repo..."
 nix-shell -p git --run "git clone https://github.com/Guibi1/.dotfiles ~/nix-config"
 
-cp ~/nix-config/vars.exemple.nix ~/nix-config/vars.nix 
+cp ~/nix-config/vars.exemple.nix ~/nix-config/vars.nix
 nano ~/nix-config/vars.nix
 clear
 echo "Vars editing complete!"
@@ -36,6 +36,19 @@ if grep -q 'NAME=NixOS' /etc/os-release; then
     echo "Linking config and switching..."
     sudo ln -sf ~/nix-config/nixos-config.nix /etc/nixos/configuration.nix
     sudo nixos-rebuild switch --upgrade
+elif ;then
+    echo "You are on MacOS!"
+    echo "I hope you disabled Hyprland!"
+    echo ""
+    sleep 5
+
+    echo "Switching NixOS to unstable channel..."
+    nix-channel --quiet --add https://nixos.org/channels/nixos-unstable nixos
+    nix-channel --quiet --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+    nix-channel --update
+
+    echo "Building config and switching..."
+    darwin-rebuild switch -I darwin-config=$HOME/nix-config/darwin-config.nix
 else
     echo "You are not on NixOS, skipping nixos-config..."
     echo "I hope you disabled Hyprland!"
@@ -50,15 +63,16 @@ else
         nix-channel --quiet --update
         nix-shell '<home-manager>' -A install
     fi
+
+    echo ""
+    echo "Linking Home Manager config and switching..."
+    rm -rf ~/.config/home-manager
+    ln -sf ~/nix-config ~/.config/home-manager
+
+    export NIXPKGS_ALLOW_UNFREE=1
+    home-manager switch
 fi
 
-echo ""
-echo "Linking Home Manager config and switching..."
-rm -rf ~/.config/home-manager
-ln -sf ~/nix-config ~/.config/home-manager
-
-export NIXPKGS_ALLOW_UNFREE=1
-home-manager switch
 
 fish -c "tide configure --auto --style=Lean --prompt_colors='True color' --show_time=No --lean_prompt_height='Two lines' --prompt_connection=Dotted --prompt_connection_andor_frame_color=Dark --prompt_spacing=Sparse --icons='Few icons' --transient=Yes"
 
