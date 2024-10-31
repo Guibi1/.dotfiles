@@ -1,7 +1,9 @@
 {
-    ### HOME MANAGER ###
-
+    hostname = "NixPC";
     home-dir = "/home/guibi";
+
+    ### HOME MANAGER ###
+    enable-hyprland = false;
 
     git = {
         # If git should be enabled
@@ -10,12 +12,9 @@
         gpgKey = "";
     };
 
-    enable-hyprland = false;
-
-
     ### NIX OS ###
-
     enable-fprint = false;
+    server = false;
 
     # The credentials to use for the eduroam wifi
     eduroam = {

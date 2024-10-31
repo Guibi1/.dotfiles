@@ -32,7 +32,7 @@ in
 
     powerManagement.enable = true;
 
-    # Bluetooth options 
+    # Bluetooth options
     hardware = {
         bluetooth = {
             enable = true;
@@ -40,7 +40,7 @@ in
             settings.General = {
                 Enable = "Source,Sink,Media,Socket";
                 Experimental = true;
-            };    
+            };
         };
 
         # pulseaudio = {
@@ -138,10 +138,10 @@ in
     };
 
 
-    # Usesr options
+    # Users options
     users = {
         defaultUserShell = pkgs.fish;
-    
+
         users.guibi = {
             isNormalUser = true;
             description = "Laurent";
@@ -176,7 +176,7 @@ in
             alsa.support32Bit = true;
             pulse.enable = true;
         };
-        
+
         # Auto start Hyprland on TTY1
         greetd = {
             enable = vars.enable-hyprland or false;
