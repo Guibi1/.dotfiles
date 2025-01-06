@@ -31,6 +31,15 @@ in
     home-manager.users.guibi = import ./home.nix;
 
 
+    # Fonts
+    fonts.packages = with pkgs; [
+        cascadia-code
+        (nerdfonts.override { fonts = [ "FiraCode" ]; })
+        noto-fonts
+        liberation_ttf
+    ];
+
+
     # Security options
     security = {
         pam.enableSudoTouchIdAuth = true;

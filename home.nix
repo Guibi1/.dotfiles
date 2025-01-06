@@ -5,7 +5,7 @@ let
 in
 {
     home.username = "guibi";
-    home.homeDirectory = vars.home-dir;
+    home.homeDirectory = lib.mkForce vars.home-dir;
     home.stateVersion = "23.11";
 
     imports = [./node-global-packages] ++ (importIf ./hyprland vars.enable-hyprland);
@@ -76,7 +76,7 @@ in
         gpg = {
             enable = true;
         };
-    
+
         # Let Home Manager install and manage itself
         home-manager.enable = true;
     };
