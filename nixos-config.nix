@@ -227,7 +227,7 @@ in
     # Fonts
     fonts.packages = with pkgs; [
         cascadia-code
-        (nerdfonts.override { fonts = [ "FiraCode" ]; })
+        nerd-fonts.fira-code
         noto-fonts
         noto-fonts-emoji
         liberation_ttf

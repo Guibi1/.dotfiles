@@ -34,7 +34,7 @@ in
     # Fonts
     fonts.packages = with pkgs; [
         cascadia-code
-        (nerdfonts.override { fonts = [ "FiraCode" ]; })
+        nerd-fonts.fira-code
         noto-fonts
         liberation_ttf
     ];
