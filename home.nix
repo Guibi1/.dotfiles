@@ -23,8 +23,8 @@ in
         rustup # Rust
         nixd # Nix
         python3Full ruff # Python
-        openjdk21_headless quarkus jdt-language-server # Java
-        gnumake gcc # C++
+        openjdk21_headless jdt-language-server # Java
+        gnumake # C++
     ];
 
 

@@ -127,6 +127,7 @@ in
         jq socat xdg-utils
         brightnessctl
         networkmanager-openconnect
+        gcc
     ];
 
 
