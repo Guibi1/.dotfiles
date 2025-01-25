@@ -66,5 +66,10 @@ in
         };
     };
 
+    # Found on github.com/openebs/openebs/issues/3727#issuecomment-2366776183
+    systemd.tmpfiles.rules = [
+        "L+ /usr/local/bin - - - - /run/current-system/sw/bin/"
+    ];
+
     networking.hostId = "6d57a4c5";
 }
