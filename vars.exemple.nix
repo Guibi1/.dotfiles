@@ -9,7 +9,9 @@
         # If git should be enabled
         enable = true;
         # Id of the GPG key to use for git signing
-        gpgKey = "";
+        # gpgKey = "";
+        # Location of the SSH key file to use for git signing
+        # sshKey = "";
     };
 
     ### NIX OS ###

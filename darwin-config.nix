@@ -42,7 +42,7 @@ in
 
     # Security options
     security = {
-        pam.enableSudoTouchIdAuth = true;
+        pam.services.sudo_local.touchIdAuth = true;
     };
 
 
@@ -51,8 +51,10 @@ in
 
 
     # Auto upgrade nix package and the daemon service.
-    services.nix-daemon.enable = true;
-    nix.package = pkgs.nix;
+    nix = {
+      enable = true;
+      package = pkgs.nix;
+    };
 
 
     # No touchy

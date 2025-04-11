@@ -21,10 +21,9 @@ in
         # Dev env
         bun nodejs_22 # TypeScript
         rustup # Rust
-        nixd # Nix
+        nixd nil # Nix
         python3Full ruff # Python
         openjdk21_headless jdt-language-server # Java
-        gnumake # C++
     ];
 
 
@@ -61,8 +60,9 @@ in
 
             # Enable gpg signing if possible
             signing = {
-                signByDefault = vars ? git.gpgKey;
-                key = vars.git.gpgKey or null;
+                signByDefault = (vars ? git.gpgKey) || (vars ? git.sshKey);
+                key = vars.git.gpgKey or vars.git.sshKey or null;
+                format = if vars ? git.sshKey then "ssh" else null;
             };
 
             # Allows for git difftool to work with vscode
