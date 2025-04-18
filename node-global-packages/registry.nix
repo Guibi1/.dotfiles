@@ -22,13 +22,13 @@ let
         sha512 = "CCZCDJuduB9OUkFkY2IgppNZMi2lBQgD2qzwXkEia16cge2pijY/aXi96CJMquDMn3nJdlPV1A5KrJEXwfLNzQ==";
       };
     };
-    "@eslint/config-array-0.19.1" = {
+    "@eslint/config-array-0.19.2" = {
       name = "_at_eslint_slash_config-array";
       packageName = "@eslint/config-array";
-      version = "0.19.1";
+      version = "0.19.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@eslint/config-array/-/config-array-0.19.1.tgz";
-        sha512 = "fo6Mtm5mWyKjA/Chy1BYTdn5mGJoDNjC7C64ug20ADsRDGrA85bN3uK3MaKbeRkRuuIEAR5N33Jr1pbm411/PA==";
+        url = "https://registry.npmjs.org/@eslint/config-array/-/config-array-0.19.2.tgz";
+        sha512 = "GNKqxfHG2ySmJOBSHg7LxeUx4xpuCoFjacmlCoYWEbaPXLwvfIjixRI12xCQZeULksQb23uiA8F40w5TojpV7w==";
       };
     };
     "@eslint/core-0.10.0" = {
@@ -40,6 +40,15 @@ let
         sha512 = "gFHJ+xBOo4G3WRlR1e/3G8A6/KZAH6zcE/hkLRCZTi/B9avAG365QhFA8uOGzTMqgTghpn7/fSnscW++dpMSAw==";
       };
     };
+    "@eslint/core-0.11.0" = {
+      name = "_at_eslint_slash_core";
+      packageName = "@eslint/core";
+      version = "0.11.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/@eslint/core/-/core-0.11.0.tgz";
+        sha512 = "DWUB2pksgNEb6Bz2fggIy1wh6fGgZP4Xyy/Mt0QZPiloKKXerbqq9D3SBQTlCRYOrcRPu4vuz+CGjwdfqxnoWA==";
+      };
+    };
     "@eslint/eslintrc-3.2.0" = {
       name = "_at_eslint_slash_eslintrc";
       packageName = "@eslint/eslintrc";
@@ -49,22 +58,22 @@ let
         sha512 = "grOjVNN8P3hjJn/eIETF1wwd12DdnwFDoyceUJLYYdkpbwq3nLi+4fqrTAONx7XDALqlL220wC/RHSC/QTI/0w==";
       };
     };
-    "@eslint/js-9.18.0" = {
+    "@eslint/js-9.20.0" = {
       name = "_at_eslint_slash_js";
       packageName = "@eslint/js";
-      version = "9.18.0";
+      version = "9.20.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@eslint/js/-/js-9.18.0.tgz";
-        sha512 = "fK6L7rxcq6/z+AaQMtiFTkvbHkBLNlwyRxHpKawP0x3u9+NC6MQTnFW+AdpwC6gfHTW0051cokQgtTN2FqlxQA==";
+        url = "https://registry.npmjs.org/@eslint/js/-/js-9.20.0.tgz";
+        sha512 = "iZA07H9io9Wn836aVTytRaNqh00Sad+EamwOVJT12GTLw1VGMFV/4JaME+JjLtr9fiGaoWgYnS54wrfWsSs4oQ==";
       };
     };
-    "@eslint/object-schema-2.1.5" = {
+    "@eslint/object-schema-2.1.6" = {
       name = "_at_eslint_slash_object-schema";
       packageName = "@eslint/object-schema";
-      version = "2.1.5";
+      version = "2.1.6";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@eslint/object-schema/-/object-schema-2.1.5.tgz";
-        sha512 = "o0bhxnL89h5Bae5T318nFoFzGy+YE5i/gGkoPAgkmTVdRKTiv3p8JHevPiPaMwoloKfEiiaHlawCqaZMqRm+XQ==";
+        url = "https://registry.npmjs.org/@eslint/object-schema/-/object-schema-2.1.6.tgz";
+        sha512 = "RBMg5FRL0I0gs51M/guSAj5/e14VQ4tpZnQNWwuDT66P14I43ItmPfIZRhO9fUVIPOAQXU47atlywZ/czoqFPA==";
       };
     };
     "@eslint/plugin-kit-0.2.5" = {
@@ -328,13 +337,13 @@ let
         sha512 = "TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==";
       };
     };
-    "eslint-9.18.0" = {
+    "eslint-9.20.0" = {
       name = "eslint";
       packageName = "eslint";
-      version = "9.18.0";
+      version = "9.20.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/eslint/-/eslint-9.18.0.tgz";
-        sha512 = "+waTfRWQlSbpt3KWE+CjrPPYnbq9kfZIYUqapc0uBXyjTp8aYXZDsUH16m39Ryq3NjAVP4tjuF7KaukeqoCoaA==";
+        url = "https://registry.npmjs.org/eslint/-/eslint-9.20.0.tgz";
+        sha512 = "aL4F8167Hg4IvsW89ejnpTwx+B/UQRzJPGgbIOl+4XqffWsahVVsLEWoZvnrVuwpWmnRd7XeXmQI1zlKcFDteA==";
       };
     };
     "eslint-scope-8.2.0" = {
@@ -517,13 +526,13 @@ let
         sha512 = "hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==";
       };
     };
-    "import-fresh-3.3.0" = {
+    "import-fresh-3.3.1" = {
       name = "import-fresh";
       packageName = "import-fresh";
-      version = "3.3.0";
+      version = "3.3.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/import-fresh/-/import-fresh-3.3.0.tgz";
-        sha512 = "veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==";
+        url = "https://registry.npmjs.org/import-fresh/-/import-fresh-3.3.1.tgz";
+        sha512 = "TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==";
       };
     };
     "imurmurhash-0.1.4" = {
@@ -778,13 +787,13 @@ let
         sha512 = "pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==";
       };
     };
-    "semver-7.6.3" = {
+    "semver-7.7.1" = {
       name = "semver";
       packageName = "semver";
-      version = "7.6.3";
+      version = "7.7.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/semver/-/semver-7.6.3.tgz";
-        sha512 = "oVekP1cKtI+CTDvHWYFUcMtsK/00wmAEfyqKfNdARm8u1wNVhSgaX7A8d4UuIlUI5e84iEwOhs7ZPYRmzU9U6A==";
+        url = "https://registry.npmjs.org/semver/-/semver-7.7.1.tgz";
+        sha512 = "hlq8tAfn0m/61p4BVRcPzIGr6LKiMwo4VM6dGi6pt4qcRkmNzTcWq6eCEjEh+qXjkMDvPlOFFSGwQjoEa6gyMA==";
       };
     };
     "shebang-command-2.0.0" = {
@@ -964,10 +973,10 @@ in
   eslint = nodeEnv.buildNodePackage {
     name = "eslint";
     packageName = "eslint";
-    version = "9.18.0";
+    version = "9.20.0";
     src = fetchurl {
-      url = "https://registry.npmjs.org/eslint/-/eslint-9.18.0.tgz";
-      sha512 = "+waTfRWQlSbpt3KWE+CjrPPYnbq9kfZIYUqapc0uBXyjTp8aYXZDsUH16m39Ryq3NjAVP4tjuF7KaukeqoCoaA==";
+      url = "https://registry.npmjs.org/eslint/-/eslint-9.20.0.tgz";
+      sha512 = "aL4F8167Hg4IvsW89ejnpTwx+B/UQRzJPGgbIOl+4XqffWsahVVsLEWoZvnrVuwpWmnRd7XeXmQI1zlKcFDteA==";
     };
     dependencies = [
       (sources."@eslint-community/eslint-utils-4.4.1" // {
@@ -976,12 +985,16 @@ in
         ];
       })
       sources."@eslint-community/regexpp-4.12.1"
-      sources."@eslint/config-array-0.19.1"
-      sources."@eslint/core-0.10.0"
+      sources."@eslint/config-array-0.19.2"
+      sources."@eslint/core-0.11.0"
       sources."@eslint/eslintrc-3.2.0"
-      sources."@eslint/js-9.18.0"
-      sources."@eslint/object-schema-2.1.5"
-      sources."@eslint/plugin-kit-0.2.5"
+      sources."@eslint/js-9.20.0"
+      sources."@eslint/object-schema-2.1.6"
+      (sources."@eslint/plugin-kit-0.2.5" // {
+        dependencies = [
+          sources."@eslint/core-0.10.0"
+        ];
+      })
       sources."@humanfs/core-0.19.1"
       (sources."@humanfs/node-0.16.6" // {
         dependencies = [
@@ -1008,7 +1021,7 @@ in
       sources."debug-4.4.0"
       sources."deep-is-0.1.4"
       sources."escape-string-regexp-4.0.0"
-      sources."eslint-9.18.0"
+      sources."eslint-9.20.0"
       sources."eslint-scope-8.2.0"
       sources."eslint-visitor-keys-4.2.0"
       sources."espree-10.3.0"
@@ -1027,7 +1040,7 @@ in
       sources."globals-14.0.0"
       sources."has-flag-4.0.0"
       sources."ignore-5.3.2"
-      sources."import-fresh-3.3.0"
+      sources."import-fresh-3.3.1"
       sources."imurmurhash-0.1.4"
       sources."is-extglob-2.1.1"
       sources."is-glob-4.0.3"
@@ -1076,10 +1089,10 @@ in
   "@withgraphite/graphite-cli" = nodeEnv.buildNodePackage {
     name = "_at_withgraphite_slash_graphite-cli";
     packageName = "@withgraphite/graphite-cli";
-    version = "1.4.11";
+    version = "1.5.3";
     src = fetchurl {
-      url = "https://registry.npmjs.org/@withgraphite/graphite-cli/-/graphite-cli-1.4.11.tgz";
-      sha512 = "08gJtJwI3Jm/zYNRAIRGsyTR827hvg7tc4HO11mqZph9SWkBl4f5JWFabs6rEg7L66dyunjAFVIEjyBp17KBDw==";
+      url = "https://registry.npmjs.org/@withgraphite/graphite-cli/-/graphite-cli-1.5.3.tgz";
+      sha512 = "295qc6YAN0l41e8cvrJhFkDsZYVqQv5n+Q9knoy2YAX+21qh8z5NZxYgTmaHEKN/1lTphACkAssS9qG1STqf9g==";
     };
     dependencies = [
       sources."ansi-regex-5.0.1"
@@ -1096,7 +1109,7 @@ in
       sources."is-fullwidth-code-point-3.0.0"
       sources."node-gyp-build-4.8.4"
       sources."require-directory-2.1.1"
-      sources."semver-7.6.3"
+      sources."semver-7.7.1"
       sources."string-width-4.2.3"
       sources."strip-ansi-6.0.1"
       sources."supports-color-7.2.0"
@@ -1111,24 +1124,6 @@ in
     meta = {
       homepage = "https://github.com/withgraphite/graphite-cli";
       license = "None";
-    };
-    production = true;
-    bypassCache = true;
-    reconstructLock = true;
-  };
-  "@biomejs/biome" = nodeEnv.buildNodePackage {
-    name = "_at_biomejs_slash_biome";
-    packageName = "@biomejs/biome";
-    version = "1.9.4";
-    src = fetchurl {
-      url = "https://registry.npmjs.org/@biomejs/biome/-/biome-1.9.4.tgz";
-      sha512 = "1rkd7G70+o9KkTn5KLmDYXihGoTaIGO9PIIN2ZB7UJxFrWw04CZHPYiMRjYsaDvVV7hP1dYNRLxSANLaBFGpog==";
-    };
-    buildInputs = globalBuildInputs;
-    meta = {
-      description = "Biome is a toolchain for the web: formatter, linter and more";
-      homepage = "https://biomejs.dev";
-      license = "MIT OR Apache-2.0";
     };
     production = true;
     bypassCache = true;

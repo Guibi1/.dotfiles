@@ -1,6 +1,1 @@
-[
-    "typescript",
-    "eslint",
-    "@withgraphite/graphite-cli",
-    "@biomejs/biome"
-]
+["typescript", "eslint", "@withgraphite/graphite-cli"]
