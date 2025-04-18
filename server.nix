@@ -7,7 +7,7 @@ in
     environment = {
         systemPackages = with pkgs; [ fluxcd ];
         sessionVariables = {
-            KUBECONFIG = "/home/guibi/kubeconfig.yaml";
+            KUBECONFIG = vars.home-dir + "/kubeconfig.yaml";
         };
     };
 
@@ -41,11 +41,12 @@ in
             enable = true;
             ports = [ 22 ];
             settings = {
-                PasswordAuthentication = false;
                 AllowUsers = [ "guibi" ];
+                PermitRootLogin = "no";
                 UseDns = true;
                 X11Forwarding = false;
-                PermitRootLogin = "no";
+                PasswordAuthentication = false;
+                KbdInteractiveAuthentication = false;
             };
         };
 
@@ -57,6 +58,7 @@ in
         };
     };
 
+
     # ZFS
     boot = {
         supportedFilesystems = [ "zfs" ];
@@ -65,6 +67,7 @@ in
             extraPools = [ "SSD" "Data" ];
         };
     };
+
 
     # Found on github.com/openebs/openebs/issues/3727#issuecomment-2366776183
     systemd.tmpfiles.rules = [
