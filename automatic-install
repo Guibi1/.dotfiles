@@ -20,7 +20,7 @@ echo "Cloning repo..."
 nix-shell -p git --run "git clone https://github.com/Guibi1/.dotfiles ~/nix-config"
 
 cp ~/nix-config/vars.exemple.nix ~/nix-config/vars.nix
-nano ~/nix-config/vars.nix
+nix-shell -p nano --run "nano ~/nix-config/vars.nix"
 clear
 echo "Vars editing complete!"
 echo ""
@@ -30,11 +30,17 @@ if grep -q 'NAME=NixOS' /etc/os-release; then
 
     echo "Switching NixOS to unstable channel..."
     sudo nix-channel --quiet --add https://nixos.org/channels/nixos-unstable nixos
+
+    echo "Adding Home Manager unstable channel..."
     sudo nix-channel --quiet --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+
+    echo "Updating channels..."
     sudo nix-channel --update
 
-    echo "Linking config and switching..."
+    echo "Linking config..."
     sudo ln -sf ~/nix-config/nixos-config.nix /etc/nixos/configuration.nix
+
+    echo "Switching..."
     sudo nixos-rebuild switch --upgrade
 elif [[ "$(uname)" == "Darwin" ]]; then
     echo "You are on MacOS!"
@@ -42,35 +48,42 @@ elif [[ "$(uname)" == "Darwin" ]]; then
     echo ""
     sleep 5
 
-    echo "Adding NixDarwin channel..."
+    echo "Adding NixDarwin unstable channel..."
     nix-channel --quiet --add https://github.com/LnL7/nix-darwin/archive/master.tar.gz darwin
+
+    echo "Adding Home Manager unstable channel..."
     nix-channel --quiet --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+
+    echo "Updating channels..."
     nix-channel --update
 
-    echo "Building config and switching..."
-    nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A darwin-rebuild
+    echo "Building NixDarwin..."
+    nix-build '<darwin>' -A darwin-rebuild
+        
+    echo "Switching..."
     ./result/bin/darwin-rebuild switch -I darwin-config=$HOME/nix-config/darwin-config.nix
     sudo rm -r result
 else
-    echo "You are not on NixOS, skipping nixos-config..."
-    echo "I hope you disabled Hyprland!"
-    echo ""
-    sleep 5
+    echo "You are running Linux!"
 
     if command -v home-manager &> /dev/null ; then
         echo "Home Manager is already installed!"
     else
-        echo "Installing Home Manager..."
+        echo "Adding Home Manager unstable channel..."
         nix-channel --quiet --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+
+        echo "Updating channels..."
         nix-channel --quiet --update
+        
+        echo "Installing Home Manager..."
         nix-shell '<home-manager>' -A install
     fi
 
-    echo ""
-    echo "Linking Home Manager config and switching..."
+    echo "Linking Home Manager config..."
     rm -rf ~/.config/home-manager
     ln -sf ~/nix-config ~/.config/home-manager
 
+    echo "Switching..."
     export NIXPKGS_ALLOW_UNFREE=1
     home-manager switch
 fi
