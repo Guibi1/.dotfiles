@@ -5,7 +5,7 @@ in
 {
     # Global packages
     environment = {
-        systemPackages = with pkgs; [ fluxcd ];
+        systemPackages = with pkgs; [ fluxcd minio-client ];
         sessionVariables = {
             KUBECONFIG = vars.home-dir + "/kubeconfig.yaml";
         };
