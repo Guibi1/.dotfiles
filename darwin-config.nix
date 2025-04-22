@@ -50,11 +50,8 @@ in
     environment.darwinConfig = "$HOME/nix-config/darwin-config.nix";
 
 
-    # Auto upgrade nix package and the daemon service.
-    nix = {
-      enable = true;
-      package = pkgs.nix;
-    };
+    # Let Determinate manager nix
+    nix.enable = false;
 
 
     # No touchy

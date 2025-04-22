@@ -48,6 +48,9 @@ elif [[ "$(uname)" == "Darwin" ]]; then
     echo ""
     sleep 5
 
+    echo "Adding NixPkgs unstable channel..."
+    nix-channel --quiet --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
+
     echo "Adding NixDarwin unstable channel..."
     nix-channel --quiet --add https://github.com/LnL7/nix-darwin/archive/master.tar.gz darwin
 
