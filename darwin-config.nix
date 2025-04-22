@@ -47,10 +47,10 @@ in
 
 
     # Custom configuration location
-    environment.darwinConfig = "$HOME/nix-config/darwin-config.nix";
+    environment.darwinConfig = vars.home-dir + "/nix-config/darwin-config.nix";
 
 
-    # Let Determinate manager nix
+    # Let Determinate manage nix
     nix.enable = false;
 
 

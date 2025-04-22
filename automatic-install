@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
 clear
-echo "Welcome to Guibi1's dotfiles"
+echo "Welcome to Guibi's dotfiles!"
 
 echo "Looking for Nix..."
 if ! command -v nix > /dev/null 2>&1; then
     echo "Nix is not installed. Running the install script and exiting."
-    sh <(curl -fsSL https://nixos.org/nix/install) --daemon
+    curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate
     echo "Please open a new terminal and run this script again."
     echo "If nix couldn't install or w/e, here's the script to run:"
-    echo "sh <(curl -fsSL https://nixos.org/nix/install) --daemon"
+    echo "curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate"
     exit 1
 fi
 
