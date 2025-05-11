@@ -1,8 +1,10 @@
 { config, pkgs, ... }:
 let
-    vars = import ./vars.nix;
+    vars = import ../vars.nix;
 in
 {
+    imports = [ ./sftp.nix ];
+
     # Global packages
     environment = {
         systemPackages = with pkgs; [ fluxcd minio-client ];

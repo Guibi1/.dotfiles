@@ -6,7 +6,7 @@ in
     imports = [
         /etc/nixos/hardware-configuration.nix
         <home-manager/nixos>
-    ] ++ (lib.optional vars.server ./server.nix);
+    ] ++ (lib.optional vars.server ./server);
 
 
     # Boot options.
