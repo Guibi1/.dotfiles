@@ -134,6 +134,7 @@ in
 
     # Programs options
     programs = {
+        ssh.startAgent = true;
         dconf.enable = true;
         hyprland.enable = vars.enable-hyprland or false;
         fish.enable = true;
@@ -217,12 +218,6 @@ in
                 TimeoutStopSec = 10;
             };
         };
-    };
-
-
-    # Session variables
-    environment.sessionVariables = {
-        SSH_AUTH_SOCK = "/run/user/$(id -u)/keyring/ssh";
     };
 
 
