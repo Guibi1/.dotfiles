@@ -122,6 +122,7 @@ in
 
     # Global packages
     environment.systemPackages = with pkgs; [
+        uutils-coreutils-noprefix sudo-rs
         git
         polkit_gnome
         jq socat xdg-utils
