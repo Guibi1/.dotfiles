@@ -3,7 +3,7 @@ let
     vars = import ../vars.nix;
 in
 {
-    imports = [ ./sftp.nix ];
+    imports = [ ./sftp.nix ./backup.nix ];
 
     # Global packages
     environment = {
