@@ -8,9 +8,13 @@ in
     environment.etc."rclone-mnt.conf".text = "
         [niftic]
         type = sftp
-        host = niftic.ca
+        host = niftic.hopto.org
+        port = 16810
         user = guibi
         key_file = /mnt/Data/Backups/keys/niftic_ed25519
+        shell_type = unix
+        md5sum_command = md5sum
+        sha1sum_command = sha1sum
 
         [azom]
         type = sftp
@@ -18,6 +22,9 @@ in
         port = 6073
         user = guibi
         key_file = /mnt/Data/Backups/keys/azom_ed25519
+        shell_type = unix
+        md5sum_command = md5sum
+        sha1sum_command = sha1sum
     ";
 
     fileSystems = {
@@ -29,6 +36,7 @@ in
                 "nofail"
                 "allow_other"
                 "args2env"
+                "vfs-cache-mode=writes"
                 "config=/etc/rclone-mnt.conf"
             ];
         };
@@ -41,6 +49,7 @@ in
                 "nofail"
                 "allow_other"
                 "args2env"
+                "vfs-cache-mode=writes"
                 "config=/etc/rclone-mnt.conf"
             ];
         };
@@ -51,7 +60,7 @@ in
     services.borgbackup = {
         jobs = {
             niftic = {
-                repo = "/mnt/niftic/borg";
+                repo = "/mnt/niftic/uploads/borg";
                 doInit = true;
                 compression = "zlib";
                 paths = [
@@ -61,7 +70,7 @@ in
                 exclude = [
                     "*.tmp"
                 ];
-                startAt = "daily";
+                startAt = [ ];
                 prune.keep = {
                     weekly = 4;
                     monthly = -1;
@@ -83,7 +92,7 @@ in
                 exclude = [
                     "*.tmp"
                 ];
-                startAt = "daily";
+                startAt = [ ];
                 prune.keep = {
                     weekly = 4;
                     monthly = -1;
@@ -93,6 +102,30 @@ in
                     passCommand = "cat /mnt/Data/Backups/keys/azom_borg";
                 };
             };
+        };
+    };
+
+    systemd.timers = {
+        "borgbackup-job-niftic" = {
+            description = "Daily timer for niftic BorgBackup";
+            requires = [ "mnt-niftic.mount" ];
+            after = [ "mnt-niftic.mount" ];
+            timerConfig = {
+                OnCalendar = "daily";
+                Unit = "borgbackup-job-niftic.service";
+            };
+            wantedBy = [ "timers.target" ];
+        };
+
+        "borgbackup-job-azom" = {
+            description = "Daily timer for azom BorgBackup";
+            requires = [ "mnt-azom.mount" ];
+            after = [ "mnt-azom.mount" ];
+            timerConfig = {
+                OnCalendar = "daily";
+                Unit = "borgbackup-job-azom.service";
+            };
+            wantedBy = [ "timers.target" ];
         };
     };
 }
