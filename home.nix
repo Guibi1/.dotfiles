@@ -40,6 +40,7 @@ in
             plugins = [
                 { name = "grc"; src = pkgs.fishPlugins.grc.src; }
                 { name = "pisces"; src = pkgs.fishPlugins.pisces.src; }
+                { name = "fzf"; src = pkgs.fishPlugins.fzf-fish.src; }
             ];
         };
 

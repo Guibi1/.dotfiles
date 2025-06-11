@@ -44,28 +44,13 @@ if grep -q 'NAME=NixOS' /etc/os-release; then
     sudo nixos-rebuild switch --upgrade
 elif [[ "$(uname)" == "Darwin" ]]; then
     echo "You are on MacOS!"
-    echo "I hope you disabled Hyprland!"
     echo ""
-    sleep 5
 
-    echo "Adding NixPkgs unstable channel..."
-    nix-channel --quiet --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
-
-    echo "Adding NixDarwin unstable channel..."
-    nix-channel --quiet --add https://github.com/LnL7/nix-darwin/archive/master.tar.gz darwin
-
-    echo "Adding Home Manager unstable channel..."
-    nix-channel --quiet --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-
-    echo "Updating channels..."
-    nix-channel --update
+    echo "Linking config..."
+    sudo ln -sf ~/nix-config/ /etc/nix-darwin
 
     echo "Building NixDarwin..."
-    nix-build '<darwin>' -A darwin-rebuild
-        
-    echo "Switching..."
-    ./result/bin/darwin-rebuild switch -I darwin-config=$HOME/nix-config/darwin-config.nix
-    sudo rm -r result
+    sudo nix run nix-darwin/master#darwin-rebuild -- switch
 else
     echo "You are running Linux!"
 
@@ -77,7 +62,7 @@ else
 
         echo "Updating channels..."
         nix-channel --quiet --update
-        
+
         echo "Installing Home Manager..."
         nix-shell '<home-manager>' -A install
     fi

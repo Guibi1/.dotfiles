@@ -1,16 +1,11 @@
-{ config, lib, pkgs, ... }:
+{ self, config, lib, pkgs, ... }:
 let
     vars = import ./vars.nix;
 in
 {
-    imports = [
-        <home-manager/nix-darwin>
-    ];
-
-
     # Global packages
     environment.systemPackages = with pkgs; [
-        git
+        git aerospace
     ];
 
 
@@ -21,14 +16,10 @@ in
     };
 
 
-    # Users options
-    users = {
-        users.guibi = {
-            shell = "${pkgs.fish}/bin/fish";
-            packages = with pkgs; [];
-        };
+    # Security options
+    security = {
+        pam.services.sudo_local.touchIdAuth = true;
     };
-    home-manager.users.guibi = import ./home.nix;
 
 
     # Fonts
@@ -39,21 +30,14 @@ in
         liberation_ttf
     ];
 
-
-    # Security options
-    security = {
-        pam.services.sudo_local.touchIdAuth = true;
-    };
-
-
-    # Custom configuration location
-    environment.darwinConfig = vars.home-dir + "/nix-config/darwin-config.nix";
-
+    environment.shells = [ pkgs.fish ];
 
     # Let Determinate manage nix
     nix.enable = false;
 
 
     # No touchy
-    system.stateVersion = 5;
+    # system.configurationRevision = self.rev or self.dirtyRev or null;
+    system.stateVersion = 6;
+    nixpkgs.hostPlatform = "aarch64-darwin";
 }
