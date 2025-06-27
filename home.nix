@@ -24,6 +24,8 @@ in
         nixd nil # Nix
         python3Full ruff # Python
         openjdk21_headless jdt-language-server # Java
+
+        ripgrep fd bat eza hyperfine tokei
     ];
 
 
@@ -42,6 +44,10 @@ in
                 { name = "pisces"; src = pkgs.fishPlugins.pisces.src; }
                 { name = "fzf"; src = pkgs.fishPlugins.fzf-fish.src; }
             ];
+            shellAliases = {
+                cat = "bat";
+                ls = "exa";
+            };
         };
 
         # Starship prompt config
