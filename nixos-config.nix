@@ -28,6 +28,11 @@ in
             enable = true;
             theme = "breeze";
         };
+
+        kernel.sysctl = {
+            "fs.inotify.max_user_watches" = 524288;
+            "fs.inotify.max_user_instances" = 8192;
+        };
     };
 
     powerManagement.enable = true;
