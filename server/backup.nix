@@ -11,17 +11,17 @@ in
         host = niftic.hopto.org
         port = 16810
         user = guibi
-        key_file = /mnt/Data/Backups/keys/niftic_ed25519
+        key_file = /home/guibi/keys/niftic_ed25519
         shell_type = unix
         md5sum_command = md5sum
         sha1sum_command = sha1sum
 
         [azom]
         type = sftp
-        host = azom.dev
+        host = ssh.azom.dev
         port = 6073
         user = guibi
-        key_file = /mnt/Data/Backups/keys/azom_ed25519
+        key_file = /home/guibi/keys/azom_ed25519
         shell_type = unix
         md5sum_command = md5sum
         sha1sum_command = sha1sum
@@ -77,7 +77,7 @@ in
                 };
                 encryption = {
                     mode = "repokey-blake2";
-                    passCommand = "cat /mnt/Data/Backups/keys/niftic_borg";
+                    passCommand = "cat /home/guibi/keys/niftic_borg";
                 };
             };
 
@@ -99,7 +99,7 @@ in
                 };
                 encryption = {
                     mode = "repokey-blake2";
-                    passCommand = "cat /mnt/Data/Backups/keys/azom_borg";
+                    passCommand = "cat /home/guibi/keys/azom_borg";
                 };
             };
         };
