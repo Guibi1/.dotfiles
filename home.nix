@@ -14,6 +14,7 @@ in
     # Packages to install
     home.packages = with pkgs; [
         fastfetch
+        yubikey-manager23
 
         # Fish/Terminal
         grc fzf

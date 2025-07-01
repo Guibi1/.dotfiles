@@ -3,10 +3,18 @@ let
     vars = import ./vars.nix;
 in
 {
-    # Global packages
-    environment.systemPackages = with pkgs; [
-        git aerospace
-    ];
+    # Global
+    environment = {
+        systemPackages = with pkgs; [
+            git aerospace
+        ];
+
+        shells = [ pkgs.fish ];
+        
+        variables = {
+           SSH_SK_PROVIDER = "/usr/local/lib/libsk-libfido2.dylib";
+        };
+    };
 
 
     # Programs options
@@ -30,7 +38,6 @@ in
         liberation_ttf
     ];
 
-    environment.shells = [ pkgs.fish ];
 
     # Let Determinate manage nix
     nix.enable = false;
