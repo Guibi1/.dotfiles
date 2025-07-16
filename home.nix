@@ -14,7 +14,7 @@ in
     # Packages to install
     home.packages = with pkgs; [
         fastfetch
-        yubikey-manager23
+        yubikey-manager
 
         # Fish/Terminal
         grc fzf
@@ -36,8 +36,11 @@ in
         fish = {
             enable = true;
             interactiveShellInit = ''
+                ${pkgs.any-nix-shell}/bin/any-nix-shell fish | source
                 function fish_greeting
-                    fastfetch -c ~/.config/fastfetch/greeting.jsonc
+                    if not set -q IN_NIX_SHELL
+                      fastfetch -c ~/.config/fastfetch/greeting.jsonc
+                    end
                 end
             '';
             plugins = [
