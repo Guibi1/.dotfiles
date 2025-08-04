@@ -17,10 +17,4 @@
     ### NIX OS ###
     enable-fprint = false;
     server = false;
-
-    # The credentials to use for the eduroam wifi
-    eduroam = {
-        identity = "";
-        password = "";
-    };
 }

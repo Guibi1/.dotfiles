@@ -1,5 +1,5 @@
 {
-    description = "Guibi's Mac dotfiles";
+    description = "Guibi's dotfiles";
 
     inputs = {
         nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -21,6 +21,15 @@
                     home-manager.useUserPackages = true;
                     home-manager.users.guibi = ./home.nix;
                 }
+            ];
+        };
+
+        # Build home-manager configuration for WSL using:
+        # $ home-manager switch --flake .#guibi
+        homeConfigurations."guibi" = home-manager.lib.homeManagerConfiguration {
+            pkgs = nixpkgs.legacyPackages.x86_64-linux;
+            modules = [
+                ./home.nix
             ];
         };
     };

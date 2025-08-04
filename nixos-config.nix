@@ -190,6 +190,11 @@ in
     # Allow unfree packages
     nixpkgs.config.allowUnfree = true;
 
+    # Nix settings
+    nix.settings = {
+        experimental-features = [ "nix-command" "flakes" ];
+        auto-optimise-store = true;
+    };
 
     # No touchy
     system.stateVersion = "23.11";
