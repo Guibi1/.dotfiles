@@ -70,7 +70,7 @@ in
 
     # Programs options
     programs = {
-        ssh.startAgent = true;
+        # ssh.startAgent = true;
         dconf.enable = true;
         hyprland.enable = vars.enable-hyprland or false;
         fish.enable = true;
