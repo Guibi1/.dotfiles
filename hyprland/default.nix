@@ -1,7 +1,4 @@
 { config, pkgs, ... }:
-let
-    vars = import ../vars.nix;
-in
 {
     imports = [ ./kitty.nix ./waybar ];
 

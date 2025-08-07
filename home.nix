@@ -120,7 +120,7 @@ in
 
         # Git config
         git = {
-            enable = vars.git.enable or false;
+            enable = true;
             userName = "Laurent Stéphenne";
             userEmail = "laurent@guibi.dev";
 
