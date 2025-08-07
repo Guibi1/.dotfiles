@@ -8,7 +8,7 @@ in
     home.homeDirectory = lib.mkForce vars.home-dir;
     home.stateVersion = "23.11";
 
-    imports = [./node-global-packages] ++ (importIf ./hyprland vars.enable-hyprland);
+    imports = [] ++ (importIf ./hyprland vars.enable-hyprland);
 
 
     # Packages to install
