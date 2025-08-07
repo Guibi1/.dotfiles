@@ -1,12 +1,8 @@
-{ config, lib, pkgs, ... }:
-let
-    vars = import ./vars.nix;
-in
+{ config, lib, pkgs, home-manager, ... }:
 {
     imports = [
-        /etc/nixos/hardware-configuration.nix
-        <home-manager/nixos>
-    ] ++ (lib.optional vars.server ./server);
+        home-manager.nixosModules.default
+    ];
 
 
     # Boot options.
@@ -35,24 +31,13 @@ in
         };
     };
 
-    powerManagement.enable = true;
 
-    # Bluetooth options
-    hardware = {
-        bluetooth = {
-            enable = true;
-            powerOnBoot = true;
-            settings.General = {
-                Enable = "Source,Sink,Media,Socket";
-                Experimental = true;
-            };
-        };
-    };
+    # Power management
+    powerManagement.enable = true;
 
 
     # Networking options
     networking = {
-        hostName = vars.hostname;
         networkmanager.enable = true;
     };
 
@@ -62,17 +47,11 @@ in
         uutils-coreutils-noprefix sudo-rs git
         htop grc fzf fastfetch
         jq socat xdg-utils
-        polkit_gnome
-        brightnessctl
-        gcc
     ];
 
 
     # Programs options
     programs = {
-        # ssh.startAgent = true;
-        dconf.enable = true;
-        hyprland.enable = vars.enable-hyprland or false;
         fish.enable = true;
     };
 
@@ -88,25 +67,13 @@ in
             packages = with pkgs; [];
         };
     };
-    home-manager.users.guibi = import ./home.nix;
+    home-manager.users.guibi = import ../home.nix;
 
 
     # Services options
     services = {
-        # Start the gnome keyring (secrets)
-        gnome.gnome-keyring.enable = true;
-
-        # Mount, trash... for the file explorer
-        gvfs.enable = true;
-
-        # Bluetooth control
-        blueman.enable = true;
-
         # CPU power management
         auto-cpufreq.enable = true;
-
-        # Fingerprint
-        fprintd.enable = vars.enable-fprint or false;
 
         # Start Pipewire (audio)
         pipewire = {
@@ -115,15 +82,6 @@ in
             alsa.support32Bit = true;
             pulse.enable = true;
         };
-
-        # Auto start Hyprland on TTY1
-        greetd = {
-            enable = vars.enable-hyprland or false;
-            settings.default_session = {
-                command = "${pkgs.hyprland}/bin/Hyprland &> /dev/null";
-                user = "guibi";
-            };
-        };
     };
 
 
@@ -131,42 +89,7 @@ in
     security = {
         polkit.enable = true;
         rtkit.enable = true;
-
-        pam.services = {
-            login.enableGnomeKeyring = true;
-            hyprlock.enableGnomeKeyring = true;
-        };
     };
-
-
-    # Systemd options
-    systemd = {
-        # Start Polkit-Gnome
-        user.services.polkit-gnome-authentication-agent-1 = {
-            enable = vars.enable-hyprland or false;
-            description = "polkit-gnome-authentication-agent-1";
-            wantedBy = [ "default.target" ];
-            serviceConfig = {
-                Type = "simple";
-                ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-                Restart = "on-failure";
-                RestartSec = 1;
-                TimeoutStopSec = 10;
-            };
-        };
-    };
-
-
-    # Fonts
-    fonts.packages = with pkgs; [
-        cascadia-code
-        nerd-fonts.fira-code
-        noto-fonts
-        noto-fonts-emoji
-        liberation_ttf
-        dina-font
-        proggyfonts
-    ];
 
 
     # Locale options
@@ -195,7 +118,4 @@ in
         experimental-features = [ "nix-command" "flakes" ];
         auto-optimise-store = true;
     };
-
-    # No touchy
-    system.stateVersion = "23.11";
 }

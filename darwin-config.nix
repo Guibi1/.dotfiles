@@ -1,7 +1,4 @@
 { self, config, lib, pkgs, ... }:
-let
-    vars = import ./vars.nix;
-in
 {
     # Global
     environment = {

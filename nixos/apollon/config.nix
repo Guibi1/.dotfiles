@@ -1,37 +1,23 @@
-{ config, pkgs, ... }:
-let
-    vars = import ../vars.nix;
-in
+{ config, lib, pkgs, ... }:
 {
-    imports = [ ./sftp.nix ./backup.nix ];
+    imports = [
+        ./hw-config.nix
+        ./sftp.nix
+        ./backup.nix
+    ];
 
     # Global packages
     environment = {
         systemPackages = with pkgs; [ fluxcd minio-client ];
         sessionVariables = {
-            KUBECONFIG = vars.home-dir + "/kubeconfig.yaml";
+            KUBECONFIG = "/home/guibi/kubeconfig.yaml";
         };
     };
 
 
-    # Networking options
-    networking = {
-        interfaces.eno1.ipv4.addresses = [ {
-            address = "192.168.18.222";
-            prefixLength = 24;
-        } ];
-
-        defaultGateway = "192.168.18.1";
-        nameservers = [ "1.1.1.1" "8.8.8.8" ];
-
-        firewall = {
-            allowedTCPPorts = [
-                6443 # k3s: required so that pods can reach the API server (running on port 6443 by default)
-            ];
-            allowedUDPPorts = [
-                27020
-            ];
-        };
+    # Programs options
+    programs = {
+        ssh.startAgent = true;
     };
 
 
@@ -61,6 +47,29 @@ in
     };
 
 
+    # Networking options
+    networking = {
+        hostName = "Apollon";
+
+        interfaces.eno1.ipv4.addresses = [ {
+            address = "192.168.18.222";
+            prefixLength = 24;
+        } ];
+
+        defaultGateway = "192.168.18.1";
+        nameservers = [ "1.1.1.1" "8.8.8.8" ];
+
+        firewall = {
+            allowedTCPPorts = [
+                6443 # k3s: required so that pods can reach the API server (running on port 6443 by default)
+            ];
+            allowedUDPPorts = [
+                27020
+            ];
+        };
+    };
+
+
     # ZFS
     boot = {
         supportedFilesystems = [ "zfs" ];
@@ -76,5 +85,8 @@ in
         "L+ /usr/local/bin - - - - /run/current-system/sw/bin/"
     ];
 
+
+    # No touchy
     networking.hostId = "6d57a4c5";
+    system.stateVersion = "23.11";
 }

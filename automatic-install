@@ -28,19 +28,14 @@ echo ""
 if grep -q 'NAME=NixOS' /etc/os-release; then
     echo "You are running NixOS!"
 
-    echo "Switching NixOS to unstable channel..."
-    sudo nix-channel --quiet --add https://nixos.org/channels/nixos-unstable nixos
-
-    echo "Adding Home Manager unstable channel..."
-    sudo nix-channel --quiet --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-
-    echo "Updating channels..."
-    sudo nix-channel --update
-
     echo "Linking config..."
-    sudo ln -sf ~/nix-config/nixos-config.nix /etc/nixos/configuration.nix
+    sudo ln -sf ~/nix-config/flake.nix /etc/nixos/flake.nix
+
+    echo "Please copy the contents of /etc/nixos/hardware-configuration.nix to the right hw-config.nix"
+    nix-shell -p fish --run "cd ~/nix-config/nixos && fish"
 
     echo "Switching..."
+    export NIXPKGS_ALLOW_UNFREE=1
     sudo nixos-rebuild switch --upgrade
 elif [[ "$(uname)" == "Darwin" ]]; then
     echo "You are on MacOS!"
@@ -50,6 +45,7 @@ elif [[ "$(uname)" == "Darwin" ]]; then
     sudo ln -sf ~/nix-config/ /etc/nix-darwin
 
     echo "Building NixDarwin..."
+    export NIXPKGS_ALLOW_UNFREE=1
     sudo nix run nix-darwin/master#darwin-rebuild -- switch
 else
     echo "You are running Linux!"

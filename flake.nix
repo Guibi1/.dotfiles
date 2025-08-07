@@ -11,6 +11,17 @@
 
     outputs = inputs@{ nixpkgs, darwin, home-manager , ... }:
     {
+        # Build nixos flake using:
+        # $ nixos-rebuild build --flake .#Apollon
+        nixosConfigurations."Apollon" = nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            specialArgs = { home-manager = home-manager; };
+            modules = [
+                ./nixos/base-config.nix
+                ./nixos/apollon/config.nix
+            ];
+        };
+
         # Build darwin flake using:
         # $ darwin-rebuild build --flake .#Hermes
         darwinConfigurations."Hermes" = darwin.lib.darwinSystem {
