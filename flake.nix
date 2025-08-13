@@ -9,7 +9,7 @@
         home-manager.inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    outputs = inputs@{ nixpkgs, darwin, home-manager , ... }:
+    outputs = { nixpkgs, darwin, home-manager , ... }:
     {
         # Build nixos flake using:
         # $ nixos-rebuild build --flake .#Apollon
@@ -41,7 +41,11 @@
                 home-manager.darwinModules.home-manager {
                     home-manager.useGlobalPkgs = true;
                     home-manager.useUserPackages = true;
-                    home-manager.users.guibi = ./home.nix;
+                    home-manager.users.guibi = { lib, ... }: {
+                        imports = [./home-manager/base-config.nix];
+                        home.homeDirectory = lib.mkForce "/Users/guibi";
+                        programs.git.signing.key = "";
+                    };
                 }
             ];
         };
@@ -50,8 +54,12 @@
         # $ home-manager switch --flake .#guibi
         homeConfigurations."guibi" = home-manager.lib.homeManagerConfiguration {
             pkgs = nixpkgs.legacyPackages.x86_64-linux;
+
             modules = [
-                ./home.nix
+                ./home-manager/base-config.nix
+                {
+                    programs.git.signing.key = "1F1C47D520393678";
+                }
             ];
         };
     };

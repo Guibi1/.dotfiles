@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
     imports = [ ./kitty.nix ./waybar ];
 
@@ -12,10 +12,9 @@
         # Programs
         firefox
         vscode
+        zed-editor
         discord
-        betterbird
         nextcloud-client
-        gimp
 
         # Hyprland specific
         hyprlock hypridle
@@ -30,6 +29,18 @@
             enable = true;
             configDir = ../dotfiles/eww;
         };
+
+        ghostty = {
+            enable = true;
+            enableFishIntegration = true;
+
+            settings = {
+                font-size = 16;
+                font-family = "Cascadia Code PL";
+                theme = "catppuccin-mocha";
+                term = "xterm-256color";
+            };
+        };
     };
 
     services = {
@@ -37,31 +48,33 @@
         mako = {
             enable = true;
 
-            # Placement
-            width = 400;
-            height = 160;
-            margin = "8";
-            padding = "8";
-            anchor = "bottom-right";
+            settings = {
+                # Placement
+                width = 400;
+                height = 160;
+                margin = "8";
+                padding = "8";
+                anchor = "bottom-right";
 
-            # General
-            font = "Cascadia Code PL 14";
-            backgroundColor = "#13141c66";
-            textColor = "#bfc9db";
-            progressColor = "#f1ca914D";
-            defaultTimeout = 3000;
+                # General
+                font = "Cascadia Code PL 14";
+                backgroundColor = "#13141c66";
+                textColor = "#bfc9db";
+                progressColor = "#f1ca914D";
+                defaultTimeout = 3000;
 
-            # Border
-            borderSize = 1;
-            borderColor = "#646a7366";
-            borderRadius = 8;
+                # Border
+                borderSize = 1;
+                borderColor = "#646a7366";
+                borderRadius = 8;
 
-            extraConfig = ''
-                outer-margin=8
+                extraConfig = ''
+                    outer-margin=8
 
-                [urgency=high]
-                default-timeout=0
-            '';
+                    [urgency=high]
+                    default-timeout=0
+                '';
+            };
         };
     };
 
@@ -80,7 +93,7 @@
 
         # .config symlinks
         configFile = {
-            # hypr.source = ../dotfiles/hypr;
+            hypr.source = ../dotfiles/hypr;
         };
     };
 
@@ -113,5 +126,6 @@
     # Env variables
     home.sessionVariables = {
         NIXOS_OZONE_WL = "1";
+        EDITOR = "zed --wait";
     };
 }

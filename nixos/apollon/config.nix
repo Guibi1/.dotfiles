@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 {
     imports = [
         ./hw-config.nix
@@ -84,6 +84,13 @@
     systemd.tmpfiles.rules = [
         "L+ /usr/local/bin - - - - /run/current-system/sw/bin/"
     ];
+
+
+    # Home manager options
+    home-manager.users.guibi = input: {
+        imports = [../../home-manager/base-config.nix];
+        programs.git.signing.key = "";
+    };
 
 
     # No touchy

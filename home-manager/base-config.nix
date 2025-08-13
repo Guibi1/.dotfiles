@@ -1,15 +1,8 @@
-{ pkgs, lib, ... }:
-let
-    vars = import ./vars.nix;
-    importIf = file: enable: lib.optional enable file;
-in
+{ pkgs, ... }:
 {
     home.username = "guibi";
-    home.homeDirectory = lib.mkForce vars.home-dir;
+    home.homeDirectory = "/home/guibi";
     home.stateVersion = "23.11";
-
-    imports = [] ++ (importIf ./hyprland vars.enable-hyprland);
-
 
     # Packages to install
     home.packages = with pkgs; [
@@ -116,6 +109,7 @@ in
             options = ["--cmd cd"];
             enableBashIntegration = true;
             enableFishIntegration = true;
+            enableZshIntegration = true;
         };
 
         # Git config
@@ -124,12 +118,7 @@ in
             userName = "Laurent Stéphenne";
             userEmail = "laurent@guibi.dev";
 
-            # Enable gpg signing if possible
-            signing = {
-                signByDefault = (vars ? git.gpgKey) || (vars ? git.sshKey);
-                key = vars.git.gpgKey or vars.git.sshKey or null;
-                format = if vars ? git.sshKey then "ssh" else null;
-            };
+            signing.signByDefault = true;
 
             # Allows for git difftool to work with vscode
             extraConfig = {
@@ -152,14 +141,13 @@ in
 
         # .config symlinks
         configFile = {
-            fastfetch.source = ./dotfiles/fastfetch;
+            fastfetch.source = ../dotfiles/fastfetch;
         };
     };
 
 
     # Env variables
     home.sessionVariables = {
-        NIXPKGS_ALLOW_UNFREE = "1";
-        EDITOR = if vars.enable-hyprland then "code --wait" else "nano";
+        EDITOR = "nano";
     };
 }

@@ -19,12 +19,6 @@ echo ""
 echo "Cloning repo..."
 nix-shell -p git --run "git clone https://github.com/Guibi1/.dotfiles ~/nix-config"
 
-cp ~/nix-config/vars.exemple.nix ~/nix-config/vars.nix
-nix-shell -p nano --run "nano ~/nix-config/vars.nix"
-clear
-echo "Vars editing complete!"
-echo ""
-
 if grep -q 'NAME=NixOS' /etc/os-release; then
     echo "You are running NixOS!"
 
@@ -32,7 +26,7 @@ if grep -q 'NAME=NixOS' /etc/os-release; then
     sudo ln -sf ~/nix-config/flake.nix /etc/nixos/flake.nix
 
     echo "Please copy the contents of /etc/nixos/hardware-configuration.nix to the right hw-config.nix"
-    nix-shell -p fish --run "cd ~/nix-config/nixos && fish"
+    nix-shell -p bash --run "cd /etc/nixos && bash"
 
     echo "Switching..."
     export NIXPKGS_ALLOW_UNFREE=1

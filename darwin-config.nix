@@ -1,4 +1,4 @@
-{ self, config, lib, pkgs, ... }:
+{ pkgs, ... }:
 {
     # Global
     environment = {

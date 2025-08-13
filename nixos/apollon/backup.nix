@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
     # SFTP mounts
     environment.systemPackages = [ pkgs.rclone ];

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 {
     imports = [
         ./hw-config.nix
@@ -47,7 +47,7 @@
 
     # Networking options
     networking = {
-        hostName = "Hermes";
+        hostName = "Artemis";
     };
 
 
@@ -101,6 +101,13 @@
         dina-font
         proggyfonts
     ];
+
+
+    # Home manager options
+    home-manager.users.guibi = input: {
+        imports = [../../home-manager/base-config.nix ../../home-manager/hyprland];
+        programs.git.signing.key = "";
+    };
 
 
     # No touchy

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, home-manager, ... }:
+{ pkgs, home-manager, ... }:
 {
     imports = [
         home-manager.nixosModules.default
@@ -64,10 +64,15 @@
             isNormalUser = true;
             description = "Laurent";
             extraGroups = [ "networkmanager" "wheel" ];
-            packages = with pkgs; [];
         };
     };
-    home-manager.users.guibi = import ../home.nix;
+
+
+    # Home manager options
+    home-manager  = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+    };
 
 
     # Services options
