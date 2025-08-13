@@ -44,7 +44,7 @@
                     home-manager.users.guibi = { lib, ... }: {
                         imports = [./home-manager/base-config.nix];
                         home.homeDirectory = lib.mkForce "/Users/guibi";
-                        programs.git.signing.key = "";
+                        programs.git.signing.key = "5E5CABB6D17CFB3E";
                     };
                 }
             ];
