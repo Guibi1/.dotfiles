@@ -58,7 +58,12 @@
             modules = [
                 ./home-manager/base-config.nix
                 {
-                    programs.git.signing.key = "1F1C47D520393678";
+                    programs.git = {
+                        signing.key = "1F1C47D520393678";
+                        extraConfig = {
+                            core.sshCommand = "ssh.exe";
+                        };
+                    };
                 }
             ];
         };
