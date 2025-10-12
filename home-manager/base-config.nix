@@ -16,7 +16,7 @@
         bun nodejs_22 # TypeScript
         rustup # Rust
         nixd nil # Nix
-        python3Full ruff # Python
+        python3Full ruff uv # Python
         openjdk21_headless jdt-language-server # Java
 
         ripgrep fd bat eza hyperfine tokei
