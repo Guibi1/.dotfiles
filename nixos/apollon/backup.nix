@@ -15,8 +15,8 @@
 
         [azom]
         type = sftp
-        host = ssh.azom.dev
-        port = 6073
+        host = 10.200.0.1
+        port = 2022
         user = guibi
         key_file = /home/guibi/keys/azom_ed25519
         shell_type = unix
@@ -38,28 +38,27 @@
             ];
         };
 
-        "/mnt/azom" = {
-            device = "azom:/";
-            fsType = "rclone";
-            options = [
-                "nodev"
-                "nofail"
-                "allow_other"
-                "args2env"
-                "vfs-cache-mode=writes"
-                "config=/etc/rclone-mnt.conf"
+       "/mnt/azom" = {
+           device = "azom:/";
+           fsType = "rclone";
+           options = [
+               "nodev"
+               "nofail"
+               "allow_other"
+               "args2env"
+               "vfs-cache-mode=writes"
+               "config=/etc/rclone-mnt.conf"
             ];
         };
     };
 
 
-    # Borgbackup options
-    services.borgbackup = {
-        jobs = {
+    # Restic options
+    services.restic = {
+        backups = {
             niftic = {
-                repo = "/mnt/niftic/uploads/borg";
-                doInit = true;
-                compression = "zlib";
+                repository = "sftp://guibi@niftic.hopto.org:16810//uploads/restic";
+                initialize = true;
                 paths = [
                     "/mnt/Data/Backups/Minecraft"
                     "/mnt/Data/NextCloud"
@@ -67,21 +66,27 @@
                 exclude = [
                     "*.tmp"
                 ];
-                startAt = [ ];
-                prune.keep = {
-                    weekly = 4;
-                    monthly = -1;
+                checkOpts = [
+                    "--with-cache"
+                ];
+                passwordFile = "/home/guibi/keys/niftic_restic";
+                timerConfig = {
+                    OnCalendar = "daily";
+                    Persistent = true;
                 };
-                encryption = {
-                    mode = "repokey-blake2";
-                    passCommand = "cat /home/guibi/keys/niftic_borg";
-                };
+                pruneOpts = [
+                    "--keep-weekly 4"
+                    "--keep-monthly 12"
+                    "--keep-yearly 3"
+                ];
+                extraOptions = [
+                    "sftp.args='-i /home/guibi/keys/niftic_ed25519'"
+                ];
             };
 
             azom = {
-                repo = "/mnt/azom/borg";
-                doInit = true;
-                compression = "zlib";
+                repository = "sftp://guibi@10.200.0.1:2022//restic";
+                initialize = true;
                 paths = [
                     "/mnt/Data/Backups/Minecraft"
                     "/mnt/Data/NextCloud"
@@ -89,40 +94,39 @@
                 exclude = [
                     "*.tmp"
                 ];
-                startAt = [ ];
-                prune.keep = {
-                    weekly = 4;
-                    monthly = -1;
+                checkOpts = [
+                    "--with-cache"
+                ];
+                passwordFile = "/home/guibi/keys/azom_restic";
+                timerConfig = {
+                    OnCalendar = "daily";
+                    Persistent = true;
                 };
-                encryption = {
-                    mode = "repokey-blake2";
-                    passCommand = "cat /home/guibi/keys/azom_borg";
-                };
+                pruneOpts = [
+                    "--keep-weekly 4"
+                    "--keep-monthly 12"
+                    "--keep-yearly 3"
+                ];
+                extraOptions = [
+                    "sftp.args='-i /home/guibi/keys/azom_ed25519'"
+                ];
             };
         };
     };
 
-    systemd.timers = {
-        "borgbackup-job-niftic" = {
-            description = "Daily timer for niftic BorgBackup";
-            requires = [ "mnt-niftic.mount" ];
-            after = [ "mnt-niftic.mount" ];
-            timerConfig = {
-                OnCalendar = "daily";
-                Unit = "borgbackup-job-niftic.service";
-            };
-            wantedBy = [ "timers.target" ];
-        };
+    networking.wg-quick.interfaces = {
+        wg0azom = {
+            address = [ "10.200.0.2/32" ];
+            privateKeyFile = "/home/guibi/keys/azom_wireguard";
 
-        "borgbackup-job-azom" = {
-            description = "Daily timer for azom BorgBackup";
-            requires = [ "mnt-azom.mount" ];
-            after = [ "mnt-azom.mount" ];
-            timerConfig = {
-                OnCalendar = "daily";
-                Unit = "borgbackup-job-azom.service";
-            };
-            wantedBy = [ "timers.target" ];
+            peers = [
+                {
+                    publicKey = "n0FZu8oaSSzRyuBX/4QCpOR4vWh/AYKS13xLLme8QFQ=";
+                    allowedIPs = [ "10.200.0.1/32" ];
+                    endpoint = "azom.dev:48318";
+                    persistentKeepalive = 25;
+                }
+            ];
         };
     };
 }

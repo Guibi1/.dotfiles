@@ -89,7 +89,7 @@
     # Home manager options
     home-manager.users.guibi = input: {
         imports = [../../home-manager/base-config.nix];
-        programs.git.signing.key = "";
+        programs.git.signing.key = "1F1C47D520393678";
     };
 
 
