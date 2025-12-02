@@ -1,23 +1,21 @@
-{ config, pkgs, ... }:
+{ ... }:
 {
     # SFTP users
-    users.users = {
+    users.users = let base = {
+        isNormalUser = true;
+        createHome = false;
+        shell = "/bin/false";
+        useDefaultShell = false;
+    }; in {
         azom = {
-            isNormalUser = true;
-            createHome = false;
-            shell = "/bin/false";
             openssh.authorizedKeys.keys = [
-                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDt+DENKmUysV2ADG7h3WTVExRdgCzr6YH3ZzHeKt8Ke azom@fedora"
             ];
-        };
+        } // base;
 
         niftic = {
-            isNormalUser = true;
-            createHome = false;
-            shell = "/bin/false";
             openssh.authorizedKeys.keys = [
             ];
-        };
+        } // base;
     };
 
 
@@ -27,15 +25,20 @@
             settings.AllowUsers = [ "azom" "niftic" ];
 
             extraConfig = "
-                Match User azom
+                Match User azom,niftic
                     ForceCommand internal-sftp
-                    ChrootDirectory /mnt/Data/Backups/Azom
                     AllowTcpForwarding no
+                    AllowAgentForwarding no
+                    AllowStreamLocalForwarding no
+                    PermitTTY no
+                    PermitUserRC no
+                    X11Forwarding no
+
+                Match User azom
+                    ChrootDirectory /mnt/Data/Backups/Azom
 
                 Match User niftic
-                    ForceCommand internal-sftp
                     ChrootDirectory /mnt/Data/Backups/Niftic
-                    AllowTcpForwarding no
             ";
         };
     };

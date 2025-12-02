@@ -1,6 +1,60 @@
 { pkgs, ... }:
 {
+    # Restic options
+    services.restic.backups = let base = {
+        paths = [
+            "/mnt/Data/Backups/Minecraft"
+            "/mnt/Data/NextCloud"
+        ];
+        timerConfig = {
+            OnCalendar = "daily";
+            Persistent = true;
+        };
+        exclude = [
+            "*.tmp"
+        ];
+        checkOpts = [ "--with-cache" ];
+        pruneOpts = [
+            "--keep-weekly 4"
+            "--keep-monthly 12"
+            "--keep-yearly 3"
+        ];
+    }; in {
+        niftic = {
+            repository = "sftp://guibi@niftic.hopto.org:16810//uploads/restic";
+            passwordFile = "/home/guibi/keys/niftic_restic";
+            extraOptions = [ "sftp.args='-i /home/guibi/keys/niftic_ed25519'" ];
+        } // base;
+
+        azom = {
+            repository = "sftp://guibi@10.200.0.1:2022//restic";
+            passwordFile = "/home/guibi/keys/azom_restic";
+            extraOptions = [ "sftp.args='-i /home/guibi/keys/azom_ed25519'" ];
+        } // base;
+    };
+
+
     # SFTP mounts
+    fileSystems = let base = {
+        fsType = "rclone";
+        options = [
+            "nodev"
+            "nofail"
+            "allow_other"
+            "args2env"
+            "vfs-cache-mode=writes"
+            "config=/etc/rclone-mnt.conf"
+        ];
+    }; in {
+        "/mnt/niftic" = {
+            device = "niftic:/";
+        } // base;
+
+        "/mnt/azom" = {
+            device = "azom:/";
+        } // base;
+    };
+
     environment.systemPackages = [ pkgs.rclone ];
     environment.etc."rclone-mnt.conf".text = "
         [niftic]
@@ -24,96 +78,8 @@
         sha1sum_command = sha1sum
     ";
 
-    fileSystems = {
-        "/mnt/niftic" = {
-            device = "niftic:/";
-            fsType = "rclone";
-            options = [
-                "nodev"
-                "nofail"
-                "allow_other"
-                "args2env"
-                "vfs-cache-mode=writes"
-                "config=/etc/rclone-mnt.conf"
-            ];
-        };
 
-       "/mnt/azom" = {
-           device = "azom:/";
-           fsType = "rclone";
-           options = [
-               "nodev"
-               "nofail"
-               "allow_other"
-               "args2env"
-               "vfs-cache-mode=writes"
-               "config=/etc/rclone-mnt.conf"
-            ];
-        };
-    };
-
-
-    # Restic options
-    services.restic = {
-        backups = {
-            niftic = {
-                repository = "sftp://guibi@niftic.hopto.org:16810//uploads/restic";
-                initialize = true;
-                paths = [
-                    "/mnt/Data/Backups/Minecraft"
-                    "/mnt/Data/NextCloud"
-                ];
-                exclude = [
-                    "*.tmp"
-                ];
-                checkOpts = [
-                    "--with-cache"
-                ];
-                passwordFile = "/home/guibi/keys/niftic_restic";
-                timerConfig = {
-                    OnCalendar = "daily";
-                    Persistent = true;
-                };
-                pruneOpts = [
-                    "--keep-weekly 4"
-                    "--keep-monthly 12"
-                    "--keep-yearly 3"
-                ];
-                extraOptions = [
-                    "sftp.args='-i /home/guibi/keys/niftic_ed25519'"
-                ];
-            };
-
-            azom = {
-                repository = "sftp://guibi@10.200.0.1:2022//restic";
-                initialize = true;
-                paths = [
-                    "/mnt/Data/Backups/Minecraft"
-                    "/mnt/Data/NextCloud"
-                ];
-                exclude = [
-                    "*.tmp"
-                ];
-                checkOpts = [
-                    "--with-cache"
-                ];
-                passwordFile = "/home/guibi/keys/azom_restic";
-                timerConfig = {
-                    OnCalendar = "daily";
-                    Persistent = true;
-                };
-                pruneOpts = [
-                    "--keep-weekly 4"
-                    "--keep-monthly 12"
-                    "--keep-yearly 3"
-                ];
-                extraOptions = [
-                    "sftp.args='-i /home/guibi/keys/azom_ed25519'"
-                ];
-            };
-        };
-    };
-
+    # Wireguard client options
     networking.wg-quick.interfaces = {
         wg0azom = {
             address = [ "10.200.0.2/32" ];
