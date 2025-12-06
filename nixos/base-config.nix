@@ -44,7 +44,8 @@
 
     # Global packages
     environment.systemPackages = with pkgs; [
-        uutils-coreutils-noprefix sudo-rs git
+        ripgrep git
+        uutils-coreutils-noprefix sudo-rs
         htop grc fzf fastfetch
         jq socat xdg-utils
     ];

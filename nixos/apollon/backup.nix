@@ -3,8 +3,9 @@
     # Restic options
     services.restic.backups = let base = {
         paths = [
-            "/mnt/Data/Backups/Minecraft"
             "/mnt/Data/NextCloud"
+            "/mnt/Data/Backups/Minecraft"
+            "/mnt/Data/Backups/ZFS"
         ];
         timerConfig = {
             OnCalendar = "daily";
@@ -93,6 +94,27 @@
                     persistentKeepalive = 25;
                 }
             ];
+        };
+    };
+
+
+    # ZFS snapshot backup options
+    systemd = {
+        services.zfs-archive-latest = {
+            description = "Archive latest ZFS CSI snapshots for backup";
+            serviceConfig = {
+                Type = "oneshot";
+                ExecStart = ["/mnt/Data/Backups/ZFS/archive-latest-snapshots.sh"];
+            };
+        };
+
+        timers.zfs-archive-latest = {
+            description = "Daily ZFS snapshot archive timer";
+            wantedBy = [ "timers.target" ];
+            timerConfig = {
+                OnCalendar = "daily";
+                Persistent = true;
+            };
         };
     };
 }
