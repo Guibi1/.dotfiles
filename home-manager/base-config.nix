@@ -115,15 +115,11 @@
         # Git config
         git = {
             enable = true;
-            userName = "Laurent Stéphenne";
-            userEmail = "laurent@guibi.dev";
-
             signing.signByDefault = true;
+            settings = {
+                user.name = "Laurent Stéphenne";
+                user.email = "laurent@guibi.dev";
 
-            # Allows for git difftool to work with vscode
-            extraConfig = {
-                diff.tool = "vscode";
-                "difftool \"vscode\"".cmd = "code --diff $LOCAL $REMOTE";
                 pull.rebase = true;
             };
         };
