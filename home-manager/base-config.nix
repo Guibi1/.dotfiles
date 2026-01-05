@@ -18,6 +18,7 @@
         nixd nil # Nix
         python3 ruff uv # Python
         openjdk21_headless jdt-language-server # Java
+        espup espflash probe-rs-tools # Embedded
 
         ripgrep fd bat eza hyperfine tokei
     ];
