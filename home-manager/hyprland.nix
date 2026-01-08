@@ -1,13 +1,9 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
-    imports = [ ./kitty.nix ./waybar ];
-
     home.packages = with pkgs; [
         # Desktop utilities
         networkmanagerapplet
-        gnome.nautilus
-        gnome.file-roller
-        gnome.seahorse
+        nautilus
 
         # Programs
         firefox
@@ -15,19 +11,31 @@
         zed-editor
         discord
         nextcloud-client
+        prismlauncher
 
         # Hyprland specific
-        hyprlock hypridle
-        grimblast
-        rofi-wayland
-        dex wl-clip-persist swww
+        hyprlauncher hyprpicker
+        dex wl-clip-persist
     ];
 
+
     programs = {
-        # Eww config
-        eww = {
+        hyprshot.enable = true;
+
+        ashell = {
             enable = true;
-            configDir = ../dotfiles/eww;
+        };
+
+        hyprlock = {
+            enable = true;
+        };
+
+        zen-browser = {
+            enable = true;
+            policies = {
+                DisableAppUpdate = true;
+                DisableTelemetry = true;
+            };
         };
 
         ghostty = {
@@ -37,13 +45,19 @@
             settings = {
                 font-size = 16;
                 font-family = "Cascadia Code PL";
-                theme = "catppuccin-mocha";
+                theme = "Catppuccin Mocha";
                 term = "xterm-256color";
             };
         };
     };
 
+
     services = {
+        hypridle.enable = true;
+        hyprpaper.enable = true;
+        hyprsunset.enable = true;
+        hyprpolkitagent.enable = true;
+
         # Mako config
         mako = {
             enable = true;
@@ -78,14 +92,17 @@
         };
     };
 
+
     home.file = {
     };
+
 
     # Configuration (mostly gnome)
     dconf = {
         enable = true;
         settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
     };
+
 
     xdg = {
         enable = true;
@@ -97,6 +114,7 @@
         };
     };
 
+
     gtk = {
         enable = true;
         theme = {
@@ -107,13 +125,8 @@
                 variant = "mocha";
             });
         };
-        iconTheme = {
-            name = "Tela-circle-black";
-            package = (pkgs.tela-circle-icon-theme.override {
-                colorVariants = [ "black" "pink" ];
-            });
-        };
     };
+
 
     # Cursor pointer
     home.pointerCursor = {
@@ -123,9 +136,10 @@
         size = 20;
     };
 
+
     # Env variables
     home.sessionVariables = {
         NIXOS_OZONE_WL = "1";
-        EDITOR = "zed --wait";
+        EDITOR = lib.mkForce "zed --wait";
     };
 }

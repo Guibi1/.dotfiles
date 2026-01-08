@@ -7,9 +7,14 @@
         darwin.inputs.nixpkgs.follows = "nixpkgs";
         home-manager.url = "github:nix-community/home-manager";
         home-manager.inputs.nixpkgs.follows = "nixpkgs";
+        zen-browser.url = "github:0xc000022070/zen-browser-flake";
+        zen-browser.inputs.nixpkgs.follows = "nixpkgs";
+        zen-browser.inputs.home-manager.follows = "home-manager";
+        waystart.url = "github:Guibi1/waystart";
+        waystart.inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    outputs = { nixpkgs, darwin, home-manager , ... }:
+    outputs = { nixpkgs, darwin, home-manager, zen-browser, waystart, ... }:
     {
         # Build nixos flake using:
         # $ nixos-rebuild build --flake .#Apollon
@@ -26,7 +31,7 @@
         # $ nixos-rebuild build --flake .#Artemis
         nixosConfigurations."Artemis" = nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
-            specialArgs = { home-manager = home-manager; };
+            specialArgs = { inherit home-manager zen-browser waystart; };
             modules = [
                 ./nixos/base-config.nix
                 ./nixos/artemis/config.nix

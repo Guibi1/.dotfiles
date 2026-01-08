@@ -1,15 +1,13 @@
-{ pkgs, ... }:
+{ config, pkgs, zen-browser, waystart, ... }:
 {
-    imports = [
-        ./hw-config.nix
-    ];
+    imports = [ ./hw-config.nix ];
 
 
     # Global packages
     environment.systemPackages = with pkgs; [
-        brightnessctl
-        polkit_gnome
-        gcc
+        waystart.packages.${pkgs.system}.default
+        easyeffects
+        brightnessctl gcc
     ];
 
 
@@ -17,28 +15,23 @@
     programs = {
         hyprland.enable = true;
         dconf.enable = true;
+        steam.enable = true;
     };
 
 
     # Services options
     services = {
-        # Start the gnome keyring (secrets)
-        gnome.gnome-keyring.enable = true;
-
         # Mount, trash... for the file explorer
         gvfs.enable = true;
 
         # Bluetooth control
         blueman.enable = true;
 
-        # Fingerprint
-        fprintd.enable = true;
-
         # Auto start Hyprland on TTY1
         greetd = {
             enable = true;
             settings.default_session = {
-                command = "${pkgs.hyprland}/bin/Hyprland &> /dev/null";
+                command = "${pkgs.hyprland}/bin/start-hyprland &> /dev/null";
                 user = "guibi";
             };
         };
@@ -55,7 +48,7 @@
     hardware = {
         bluetooth = {
             enable = true;
-            powerOnBoot = true;
+            powerOnBoot = false;
             settings.General = {
                 Enable = "Source,Sink,Media,Socket";
                 Experimental = true;
@@ -72,21 +65,15 @@
         };
     };
 
-
-    # Systemd options
-    systemd = {
-        # Start Polkit-Gnome
-        user.services.polkit-gnome-authentication-agent-1 = {
-            enable = true;
-            description = "polkit-gnome-authentication-agent-1";
-            wantedBy = [ "default.target" ];
-            serviceConfig = {
-                Type = "simple";
-                ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-                Restart = "on-failure";
-                RestartSec = 1;
-                TimeoutStopSec = 10;
-            };
+    # Nvidia options
+    services.xserver.videoDrivers = [ "nvidia" ];
+    hardware = {
+        graphics.enable = true;
+        nvidia = {
+            modesetting.enable = true;
+            open = true;
+            nvidiaSettings = true;
+            package = config.boot.kernelPackages.nvidiaPackages.stable;
         };
     };
 
@@ -96,7 +83,7 @@
         cascadia-code
         nerd-fonts.fira-code
         noto-fonts
-        noto-fonts-emoji
+        noto-fonts-color-emoji
         liberation_ttf
         dina-font
         proggyfonts
@@ -105,11 +92,15 @@
 
     # Home manager options
     home-manager.users.guibi = input: {
-        imports = [../../home-manager/base-config.nix ../../home-manager/hyprland];
-        programs.git.signing.key = "";
+        imports = [
+            ../../home-manager/base-config.nix
+            ../../home-manager/hyprland.nix
+            zen-browser.homeModules.default
+        ];
+        programs.git.signing.key = "1F1C47D520393678";
     };
 
 
     # No touchy
-    system.stateVersion = "23.11";
+    system.stateVersion = "25.11";
 }

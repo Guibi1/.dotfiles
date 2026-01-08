@@ -17,7 +17,6 @@
 
     # Programs options
     programs = {
-        ssh.startAgent = true;
     };
 
 
