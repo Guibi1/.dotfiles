@@ -15,6 +15,7 @@
 
         # Hyprland specific
         hyprlauncher hyprpicker
+        hypridle
         dex wl-clip-persist
     ];
 
@@ -53,7 +54,6 @@
 
 
     services = {
-        hypridle.enable = true;
         hyprpaper.enable = true;
         hyprsunset.enable = true;
         hyprpolkitagent.enable = true;
@@ -61,7 +61,6 @@
         # Mako config
         mako = {
             enable = true;
-
             settings = {
                 # Placement
                 width = 400;
@@ -109,9 +108,9 @@
         userDirs.createDirectories = true;
 
         # .config symlinks
-        configFile = {
-            hypr.source = ../dotfiles/hypr;
-        };
+        # configFile = {
+        #     hypr.source = ../dotfiles/hypr;
+        # };
     };
 
 

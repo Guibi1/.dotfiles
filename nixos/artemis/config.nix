@@ -5,7 +5,7 @@
 
     # Global packages
     environment.systemPackages = with pkgs; [
-        waystart.packages.${pkgs.system}.default
+        waystart.packages.${pkgs.stdenv.hostPlatform.system}.default
         easyeffects
         brightnessctl gcc
     ];
@@ -13,8 +13,9 @@
 
     # Programs options
     programs = {
-        hyprland.enable = true;
         dconf.enable = true;
+        nix-ld.enable = true;
+        hyprland.enable = true;
         steam.enable = true;
     };
 
