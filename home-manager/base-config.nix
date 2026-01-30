@@ -3,6 +3,7 @@
     home.username = "guibi";
     home.homeDirectory = "/home/guibi";
     home.stateVersion = "23.11";
+    home.sessionPath = [ "$HOME/.cache/.bun/bin" ];
 
     # Packages to install
     home.packages = with pkgs; [
