@@ -83,16 +83,11 @@
 
                 extraConfig = ''
                     outer-margin=8
-
                     [urgency=high]
                     default-timeout=0
                 '';
             };
         };
-    };
-
-
-    home.file = {
     };
 
 
