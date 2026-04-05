@@ -8,13 +8,11 @@
         useDefaultShell = false;
     }; in {
         azom = {
-            openssh.authorizedKeys.keys = [
-            ];
+            openssh.authorizedKeys.keys = [  ];
         } // base;
 
         niftic = {
-            openssh.authorizedKeys.keys = [
-            ];
+            openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBwSbiovllDA0ej4uBugI/nqx1u5LS0KinWBlQusElJk" ];
         } // base;
     };
 

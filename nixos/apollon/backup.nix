@@ -3,7 +3,7 @@
     # Restic options
     services.restic.backups = let base = {
         paths = [
-            "/mnt/Data/NextCloud"
+            "/mnt/Data/OpenCloud"
             "/mnt/Data/Backups/Minecraft"
             "/mnt/Data/Backups/ZFS"
         ];
@@ -22,7 +22,7 @@
         ];
     }; in {
         niftic = {
-            repository = "sftp://guibi@niftic.hopto.org:16810//uploads/restic";
+            repository = "sftp://guibi@192.168.0.206:22//uploads/restic";
             passwordFile = "/home/guibi/keys/niftic_restic";
             extraOptions = [ "sftp.args='-i /home/guibi/keys/niftic_ed25519'" ];
         } // base;
@@ -60,8 +60,8 @@
     environment.etc."rclone-mnt.conf".text = "
         [niftic]
         type = sftp
-        host = niftic.hopto.org
-        port = 16810
+        host = 192.168.0.206
+        port = 22
         user = guibi
         key_file = /home/guibi/keys/niftic_ed25519
         shell_type = unix
@@ -82,7 +82,7 @@
 
     # Wireguard client options
     networking.wg-quick.interfaces = {
-        wg0azom = {
+        azom = {
             address = [ "10.200.0.2/32" ];
             privateKeyFile = "/home/guibi/keys/azom_wireguard";
 
@@ -91,6 +91,20 @@
                     publicKey = "n0FZu8oaSSzRyuBX/4QCpOR4vWh/AYKS13xLLme8QFQ=";
                     allowedIPs = [ "10.200.0.1/32" ];
                     endpoint = "azom.dev:48318";
+                    persistentKeepalive = 25;
+                }
+            ];
+        };
+
+        niftic = {
+            address = [ "10.10.0.2/32" ];
+            privateKeyFile = "/home/guibi/keys/niftic_wireguard";
+
+            peers = [
+                {
+                    publicKey = "qCeDw5Cdyax6YQ5KpztIkanXv63z8l1rVddvW6b5oXA=";
+                    allowedIPs = [ "10.10.0.1/32" "192.168.0.206/32" ];
+                    endpoint = "niftic.hopto.org:51820";
                     persistentKeepalive = 25;
                 }
             ];
