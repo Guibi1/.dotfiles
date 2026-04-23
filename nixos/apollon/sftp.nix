@@ -12,7 +12,10 @@
         } // base;
 
         niftic = {
-            openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBwSbiovllDA0ej4uBugI/nqx1u5LS0KinWBlQusElJk" ];
+            openssh.authorizedKeys.keys = [
+                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBwSbiovllDA0ej4uBugI/nqx1u5LS0KinWBlQusElJk"
+                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIeoE2GlAJrG9kuRuzsRMA9nTKgK1b6VNlJHSauzMcSj"
+            ];
         } // base;
     };
 

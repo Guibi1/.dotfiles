@@ -5,7 +5,7 @@
         paths = [
             "/mnt/Data/OpenCloud"
             "/mnt/Data/Backups/Minecraft"
-            "/mnt/Data/Backups/ZFS"
+            "/mnt/Data/Backups/OpenEBS"
         ];
         timerConfig = {
             OnCalendar = "daily";
@@ -118,7 +118,7 @@
             description = "Archive latest ZFS CSI snapshots for backup";
             serviceConfig = {
                 Type = "oneshot";
-                ExecStart = ["/mnt/Data/Backups/ZFS/archive-latest-snapshots.sh"];
+                ExecStart = ["/mnt/Data/Backups/OpenEBS/archive-latest-snapshots.sh"];
             };
         };
 
