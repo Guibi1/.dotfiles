@@ -17,6 +17,7 @@
 
     # Programs options
     programs = {
+        mosh.enable = true;
     };
 
 

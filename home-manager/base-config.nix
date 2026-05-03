@@ -21,7 +21,7 @@
         graalvmPackages.graalvm-ce jdt-language-server # Java
         espup espflash probe-rs-tools # Embedded
 
-        ripgrep fd bat eza hyperfine tokei
+        mosh ripgrep fd bat eza hyperfine tokei
     ];
 
 
