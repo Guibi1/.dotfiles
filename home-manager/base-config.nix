@@ -135,7 +135,7 @@
                 signing.behavior = "own";
                 signing.backend = "gpg";
                 git.sign-on-push = true;
-                git.colocate = false;
+                git.colocate = true;
                 ui.default-command = ["log" "-r" "@|ancestors(remote_bookmarks().., 2)|trunk()"];
                 remotes.origin.fetch-tags = "v*";
             };
