@@ -126,6 +126,21 @@
             };
         };
 
+        # Jujutsu config
+        jujutsu = {
+            enable = true;
+            settings = {
+                user.name = "Laurent Stéphenne";
+                user.email = "laurent@guibi.dev";
+                signing.behavior = "own";
+                signing.backend = "gpg";
+                git.sign-on-push = true;
+                git.colocate = false;
+                ui.default-command = ["log" "-r" "@|ancestors(remote_bookmarks().., 2)|trunk()"];
+                remotes.origin.fetch-tags = "v*";
+            };
+        };
+
         gpg = {
             enable = true;
         };
