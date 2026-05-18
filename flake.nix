@@ -65,7 +65,7 @@
                 {
                     programs.git = {
                         signing.key = "1F1C47D520393678";
-                        extraConfig = {
+                        settings = {
                             core.sshCommand = "ssh.exe";
                         };
                     };
