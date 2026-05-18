@@ -56,16 +56,14 @@
             enableTransience = true;
             settings = {
                 add_newline = true;
+                git_status.disabled = true;
+                git_commit.disabled = true;
+                git_metrics.disabled = true;
+                git_branch.disabled = true;
 
                 character = {
-                    # Note the use of Catppuccin color 'peach'
                     success_symbol = "[[󰄛](green) ❯](peach)";
                     error_symbol = "[[󰄛](red) ❯](peach)";
-                    vimcmd_symbol = "[󰄛 ❮](subtext1)"; # For use with zsh-vi-mode
-                };
-
-                git_branch = {
-                    style = "bold mauve";
                 };
 
                 directory = {
@@ -101,6 +99,59 @@
                     base = "#1e1e2e";
                     mantle = "#181825";
                     crust = "#11111b";
+                };
+
+                custom = {
+                    jj = {
+                        symbol = "🥋 ";
+                        command = ''
+                            jj log --revisions @ --no-graph --ignore-working-copy --color always --limit 1 --template '
+                            separate(" ",
+                                change_id.shortest(7),
+                                bookmarks,
+                                concat(
+                                    if(conflict, "💥"),
+                                    if(divergent, "🚧"),
+                                    if(hidden, "👻"),
+                                    if(immutable, "🔒"),
+                                ),
+                                raw_escape_sequence("\x1b[1;32m") ++ if(empty, "(empty)"),
+                                raw_escape_sequence("\x1b[1;32m") ++ truncate_end(16, description.first_line(), "…") ++ raw_escape_sequence("\x1b[0m"),
+                            )'
+                        '';
+                        require_repo = true;
+                        shell = ["bash" "--norc" "--noprofile"];
+                        when = "while ! test -d .jj; do test $PWD = / && exit 1; cd -P ..; done; exit 0";
+                    };
+
+                    git_status = {
+                        command = "starship module git_status";
+                        require_repo = true;
+                        shell = ["bash" "--norc" "--noprofile"];
+                        when = "while ! test -d .jj; do test $PWD = / && exit 0; cd -P ..; done; exit 1";
+                    };
+
+                    git_commit = {
+                        command = "starship module git_commit";
+                        require_repo = true;
+                        shell = ["bash" "--norc" "--noprofile"];
+                        when = "while ! test -d .jj; do test $PWD = / && exit 0; cd -P ..; done; exit 1";
+                    };
+
+                    git_metrics = {
+                        command = "starship module git_metrics";
+                        require_repo = true;
+                        shell = ["bash" "--norc" "--noprofile"];
+                        when = "while ! test -d .jj; do test $PWD = / && exit 0; cd -P ..; done; exit 1";
+                    };
+
+                    git_branch = {
+                        command = "starship module git_branch";
+                        style = "bold mauve";
+                        require_repo = true;
+                        shell = ["bash" "--norc" "--noprofile"];
+                        when = "while ! test -d .jj; do test $PWD = / && exit 0; cd -P ..; done; exit 1";
+                    };
                 };
             };
         };
