@@ -12,15 +12,17 @@
         zen-browser.inputs.home-manager.follows = "home-manager";
         waystart.url = "github:Guibi1/waystart";
         waystart.inputs.nixpkgs.follows = "nixpkgs";
+        cme.url = "github:Guibi1/cme";
+        cme.inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    outputs = { nixpkgs, darwin, home-manager, zen-browser, waystart, ... }:
+    outputs = { nixpkgs, darwin, home-manager, zen-browser, waystart, cme, ... }:
     {
         # Build nixos flake using:
         # $ nixos-rebuild build --flake .#Apollon
         nixosConfigurations."Apollon" = nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
-            specialArgs = { home-manager = home-manager; };
+            specialArgs = { inherit home-manager cme; };
             modules = [
                 ./nixos/base-config.nix
                 ./nixos/apollon/config.nix
@@ -31,7 +33,7 @@
         # $ nixos-rebuild build --flake .#Artemis
         nixosConfigurations."Artemis" = nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
-            specialArgs = { inherit home-manager zen-browser waystart; };
+            specialArgs = { inherit home-manager zen-browser waystart cme; };
             modules = [
                 ./nixos/base-config.nix
                 ./nixos/artemis/config.nix
@@ -44,6 +46,7 @@
             modules = [
                 ./darwin-config.nix
                 home-manager.darwinModules.home-manager {
+                    home-manager.extraSpecialArgs = { inherit cme; };
                     home-manager.useGlobalPkgs = true;
                     home-manager.useUserPackages = true;
                     home-manager.users.guibi = { lib, ... }: {
@@ -59,6 +62,7 @@
         # $ home-manager switch --flake .#guibi
         homeConfigurations."guibi" = home-manager.lib.homeManagerConfiguration {
             pkgs = nixpkgs.legacyPackages.x86_64-linux;
+            extraSpecialArgs = { inherit cme; };
 
             modules = [
                 ./home-manager/base-config.nix

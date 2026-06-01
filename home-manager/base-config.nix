@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, cme, ... }:
 {
     home.username = "guibi";
     home.homeDirectory = "/home/guibi";
@@ -12,6 +12,7 @@
 
         # Fish/Terminal
         grc fzf
+        cme.packages.${pkgs.stdenv.hostPlatform.system}.default
 
         # Dev env
         bun nodejs_22 # TypeScript
@@ -187,6 +188,7 @@
                 signing.backend = "gpg";
                 git.sign-on-push = true;
                 git.colocate = true;
+                ui.editor = "cme --title 'Enter commit description' --fullscreen";
                 ui.default-command = ["log" "-r" "@|ancestors(remote_bookmarks().., 2)|trunk()"];
                 remotes.origin.fetch-tags = "v*";
             };

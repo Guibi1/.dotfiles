@@ -1,4 +1,4 @@
-{ pkgs, home-manager, ... }:
+{ pkgs, home-manager, cme, ... }:
 {
     imports = [
         home-manager.nixosModules.default
@@ -72,6 +72,7 @@
 
     # Home manager options
     home-manager  = {
+        extraSpecialArgs = { inherit cme; };
         useGlobalPkgs = true;
         useUserPackages = true;
     };
