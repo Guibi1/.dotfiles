@@ -35,7 +35,7 @@
                 ${pkgs.any-nix-shell}/bin/any-nix-shell fish | source
                 function fish_greeting
                     if not set -q IN_NIX_SHELL
-                      fastfetch -c ~/.config/fastfetch/greeting.jsonc
+                        fastfetch -c ~/.config/fastfetch/greeting.jsonc
                     end
                 end
             '';
@@ -175,6 +175,7 @@
                 user.email = "laurent@guibi.dev";
 
                 pull.rebase = true;
+                core.editor = "cme --title 'Enter commit description'";
             };
         };
 
@@ -188,7 +189,7 @@
                 signing.backend = "gpg";
                 git.sign-on-push = true;
                 git.colocate = true;
-                ui.editor = "cme --title 'Enter commit description' --fullscreen";
+                ui.editor = "cme --title 'Enter commit description'";
                 ui.default-command = ["log" "-r" "@|ancestors(remote_bookmarks().., 2)|trunk()"];
                 remotes.origin.fetch-tags = "v*";
             };
