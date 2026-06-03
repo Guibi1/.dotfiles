@@ -17,6 +17,7 @@
         # Dev env
         bun nodejs_22 # TypeScript
         rustup binaryen # Rust
+        go # Go
         nixd nil # Nix
         python3 ruff uv # Python
         graalvmPackages.graalvm-ce jdt-language-server # Java
