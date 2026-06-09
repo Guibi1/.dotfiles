@@ -8,7 +8,7 @@
 
     # Global packages
     environment = {
-        systemPackages = with pkgs; [ fluxcd minio-client ];
+        systemPackages = with pkgs; [ fluxcd seaweedfs ];
         sessionVariables = {
             KUBECONFIG = "/home/guibi/kubeconfig.yaml";
         };
