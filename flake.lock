@@ -9,11 +9,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780363948,
-        "narHash": "sha256-0XvehhviOTa2d0BX84GkMBPqb2BMVLCZiqEVYLA0mf0=",
+        "lastModified": 1781630187,
+        "narHash": "sha256-eHqYPajES8DSEjwRtIiHwdYn3TQEYmaYu9v9ndB5W8g=",
         "owner": "Guibi1",
         "repo": "cme",
-        "rev": "e24fb19bb0d88dbaaea5354f5656c6e5734ec96e",
+        "rev": "05abd0bd74dc65fa1d1d790cc0c2f3936b357fd1",
         "type": "github"
       },
       "original": {
