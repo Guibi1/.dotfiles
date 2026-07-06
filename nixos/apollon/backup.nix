@@ -130,5 +130,44 @@
                 Persistent = true;
             };
         };
+
+        # Re-resolve dynamic-DNS peer endpoints when a tunnel goes stale,
+        # so WireGuard reconnects instead of staying dead on a stale IP.
+        services.wg-endpoint-refresh = {
+            description = "Re-resolve stale WireGuard peer endpoints (dynamic DNS)";
+            after = [ "wg-quick-azom.service" "wg-quick-niftic.service" ];
+            serviceConfig = {
+                Type = "oneshot";
+                ExecStart = let
+                    wg = "${pkgs.wireguard-tools}/bin/wg";
+                    awk = "${pkgs.gawk}/bin/awk";
+                    date = "${pkgs.uutils-coreutils-noprefix}/bin/date";
+                in pkgs.writeShellScript "wg-endpoint-refresh" ''
+                    set -uo pipefail
+                    STALE=120  # seconds w/o handshake before intervening
+
+                    refresh() {  # iface pubkey endpoint
+                        ${wg} show "$1" >/dev/null 2>&1 || return 0
+                        now=$(${date} +%s)
+                        hs=$(${wg} show "$1" latest-handshakes 2>/dev/null | ${awk} '{print $2}')
+                        if [ -z "$hs" ] || [ $((now - hs)) -gt "$STALE" ]; then
+                            ${wg} set "$1" peer "$2" endpoint "$3" || true
+                        fi
+                    }
+
+                    refresh azom   n0FZu8oaSSzRyuBX/4QCpOR4vWh/AYKS13xLLme8QFQ= azom.dev:48318
+                    refresh niftic qCeDw5Cdyax6YQ5KpztIkanXv63z8l1rVddvW6b5oXA= niftic.hopto.org:51820
+                '';
+            };
+        };
+
+        timers.wg-endpoint-refresh = {
+            description = "Periodically refresh stale WireGuard peer endpoints";
+            wantedBy = [ "timers.target" ];
+            timerConfig = {
+                OnBootSec = "2h";
+                OnUnitActiveSec = "1h";
+            };
+        };
     };
 }
