@@ -14,9 +14,14 @@
             efi.canTouchEfiVariables = true;
             timeout = 0;
 
-            systemd-boot = {
-               enable = true;
-               configurationLimit = 10;
+            limine = {
+                enable = true;
+                maxGenerations = 10;
+                secureBoot = {
+                    enable = true;
+                    autoGenerateKeys = true;
+                    autoEnrollKeys.enable = true;
+                };
             };
         };
 
@@ -71,7 +76,7 @@
 
 
     # Home manager options
-    home-manager  = {
+    home-manager = {
         extraSpecialArgs = { inherit cme; };
         useGlobalPkgs = true;
         useUserPackages = true;
