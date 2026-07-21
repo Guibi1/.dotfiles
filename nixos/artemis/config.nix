@@ -31,9 +31,12 @@
         # Auto start Hyprland on TTY1
         greetd = {
             enable = true;
-            settings.default_session = {
-                command = "${pkgs.hyprland}/bin/start-hyprland &> /dev/null";
-                user = "guibi";
+            settings = rec {
+                initial_session = {
+                    command = "${pkgs.hyprland}/bin/start-hyprland";
+                    user = "guibi";
+                };
+                default_session = initial_session;
             };
         };
     };

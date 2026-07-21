@@ -6,11 +6,9 @@
         nautilus
 
         # Programs
-        firefox
-        vscode
         zed-editor
         discord
-        nextcloud-client
+        opencloud-desktop
         prismlauncher
 
         # Hyprland specific
@@ -33,6 +31,7 @@
 
         zen-browser = {
             enable = true;
+            setAsDefaultBrowser = true;
             policies = {
                 DisableAppUpdate = true;
                 DisableTelemetry = true;
@@ -44,7 +43,7 @@
             enableFishIntegration = true;
 
             settings = {
-                font-size = 16;
+                font-size = 14;
                 font-family = "Cascadia Code PL";
                 theme = "Catppuccin Mocha";
                 term = "xterm-256color";
@@ -124,16 +123,22 @@
 
     # Cursor pointer
     home.pointerCursor = {
-        gtk.enable = true;
+        enable = true;
         package = pkgs.bibata-cursors;
         name = "Bibata-Modern-Classic";
-        size = 20;
+        size = 14;
     };
 
 
     # Env variables
     home.sessionVariables = {
+        XDG_DOCUMENTS_DIR = "$HOME/Documents";
+        XDG_DOWNLOAD_DIR = "$HOME/Téléchargements";
+        XDG_MUSIC_DIR = "$HOME/Musique";
+        XDG_PICTURES_DIR = "$HOME/Images";
+        HYPRCURSOR_THEME = "Bibata-Modern-Classic";
+        HYPRCURSOR_SIZE = "14";
         NIXOS_OZONE_WL = "1";
-        EDITOR = lib.mkForce "zed --wait";
+        EDITOR = lib.mkForce "zeditor --wait";
     };
 }
