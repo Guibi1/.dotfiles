@@ -1,6 +1,6 @@
 # Home manager and NixOS dotfiles
 
-My all in one linux environment and desktop rice !
+My all in one linux environment and desktop rice!
 
 ## Installation
 
@@ -12,36 +12,21 @@ bash <(curl -fsSL https://guibi.dev/nix)
 
 ### NixOS
 
-First make sure NixOS is running the `unstable` channel.
-
 ```bash
-sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+sudo nixos-rebuild switch --flake ~/nix-config#Artemis
+sudo nixos-rebuild switch --flake ~/nix-config#Apollon
 ```
 
-Then, link the configuration file to `/etc/nixos/` and rebuild.
+### Darwin (macOS)
 
 ```bash
-sudo ln -sf ~/nix-config/nixos-config.nix /etc/nixos/configuration.nix
-sudo nixos-rebuild switch --upgrade
+darwin-rebuild switch --flake ~/nix-config#Hermes
 ```
 
-With that done, its time to install Home Manager !
-
-### Home Manager
-
-Add the home manager channel (yeah i didn't use the flake idk) and install it.
+### Home Manager (WSL / standalone)
 
 ```bash
-nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-nix-channel --update
-nix-shell '<home-manager>' -A install
-```
-
-Now, you can link the entire repo to `.config/home-manager`, as god intended.
-
-```bash
-ln -sf ~/nix-config ~/.config/home-manager
-home-manager switch
+home-manager switch --flake ~/nix-config#guibi
 ```
 
 ### Git signing

@@ -25,12 +25,12 @@ if grep -q 'NAME=NixOS' /etc/os-release; then
     echo "Linking config..."
     sudo ln -sf ~/nix-config/flake.nix /etc/nixos/flake.nix
 
-    echo "Please copy the contents of /etc/nixos/hardware-configuration.nix to the right hw-config.nix"
+    echo "Please copy your hardware-configuration.nix to hosts/artemis/ or hosts/apollon/"
     nix-shell -p bash --run "cd /etc/nixos && bash"
 
     echo "Switching..."
     export NIXPKGS_ALLOW_UNFREE=1
-    sudo nixos-rebuild switch --upgrade
+    sudo nixos-rebuild switch --flake ~/nix-config --upgrade
 elif [[ "$(uname)" == "Darwin" ]]; then
     echo "You are on MacOS!"
     echo ""
@@ -40,7 +40,7 @@ elif [[ "$(uname)" == "Darwin" ]]; then
 
     echo "Building NixDarwin..."
     export NIXPKGS_ALLOW_UNFREE=1
-    sudo nix run nix-darwin/master#darwin-rebuild -- switch
+    nix run nix-darwin/master#darwin-rebuild -- switch --flake ~/nix-config#Hermes
 else
     echo "You are running Linux!"
 
@@ -63,7 +63,7 @@ else
 
     echo "Switching..."
     export NIXPKGS_ALLOW_UNFREE=1
-    home-manager switch
+    home-manager switch --flake ~/nix-config#guibi
 fi
 
 echo "All done!"
