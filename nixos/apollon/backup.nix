@@ -16,8 +16,9 @@
         ];
         checkOpts = [ "--with-cache" ];
         pruneOpts = [
-            "--keep-weekly 4"
-            "--keep-monthly 12"
+            "--keep-daily 2"
+            "--keep-weekly 3"
+            "--keep-monthly 3"
             "--keep-yearly 3"
         ];
     }; in {
