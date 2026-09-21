@@ -19,16 +19,18 @@
   };
 
   config.server.sftp.nixos = { lib, ... }: {
-    users.users = builtins.listToAttrs map (user: {
-      name = user.name;
-      value = {
-        isNormalUser = true;
-        createHome = false;
-        shell = "/bin/false";
-        useDefaultShell = false;
-        openssh.authorizedKeys.keys = user.keys;
-      };
-    }) config.server.sftp.users;
+    users.users = builtins.listToAttrs (
+      map (user: {
+        name = user.name;
+        value = {
+          isNormalUser = true;
+          createHome = false;
+          shell = "/bin/false";
+          useDefaultShell = false;
+          openssh.authorizedKeys.keys = user.keys;
+        };
+      }) config.server.sftp.users
+    );
 
     services = {
       openssh = {
@@ -36,7 +38,7 @@
 
         extraConfig =
           let
-            names = lib.string.join "," (map (user: user.name) config.server.sftp.users);
+            names = lib.strings.join "," (map (user: user.name) config.server.sftp.users);
           in
           ''
             Match User ${names}
@@ -48,7 +50,7 @@
                 PermitUserRC no
                 X11Forwarding no
           ''
-          + lib.string.join "\n" (
+          + lib.strings.join "\n" (
             map (user: ''
               Match User ${user.name}
                   ChrootDirectory ${user.chroot}

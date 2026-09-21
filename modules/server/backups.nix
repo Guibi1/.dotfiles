@@ -61,51 +61,55 @@
 
   config.server.backups.nixos = { lib, pkgs, ... }: {
     # Restic options
-    services.restic.backups = builtins.listToAttrs map (remote: {
-      name = remote.name;
-      value = {
-        repository = "sftp://${remote.user}@${remote.host}:${toString remote.port}/${remote.resticPath}";
-        passwordFile = remote.passwordFile;
-        extraOptions = [ "sftp.args='-i ${remote.identityFile}'" ];
-        timerConfig = {
-          OnCalendar = "daily";
-          Persistent = true;
+    services.restic.backups = builtins.listToAttrs (
+      map (remote: {
+        name = remote.name;
+        value = {
+          repository = "sftp://${remote.user}@${remote.host}:${toString remote.port}/${remote.resticPath}";
+          passwordFile = remote.passwordFile;
+          extraOptions = [ "sftp.args='-i ${remote.identityFile}'" ];
+          timerConfig = {
+            OnCalendar = "daily";
+            Persistent = true;
+          };
+          exclude = [
+            "*.tmp"
+          ];
+          checkOpts = [ "--with-cache" ];
+          paths = config.server.backups.settings.paths;
+          pruneOpts = config.server.backups.settings.pruneOpts;
         };
-        exclude = [
-          "*.tmp"
-        ];
-        checkOpts = [ "--with-cache" ];
-        paths = config.server.backups.settings.paths;
-        pruneOpts = config.server.backups.settings.pruneOpts;
-      };
-    }) config.server.backups.remotes;
+      }) config.server.backups.remotes
+    );
 
     # WireGuard options
-    networking.wg-quick.interfaces = builtins.listToAttrs map (remote: {
-      name = remote.name;
-      value = {
-        address = [ remote.wg.address ];
-        privateKeyFile = remote.wg.privateKeyFile;
+    networking.wg-quick.interfaces = builtins.listToAttrs (
+      map (remote: {
+        name = remote.name;
+        value = {
+          address = [ remote.wg.address ];
+          privateKeyFile = remote.wg.privateKeyFile;
 
-        peers = [
-          {
-            persistentKeepalive = 25;
-            allowedIPs = [ "${remote.host}/32" ];
-            endpoint = remote.wg.endpoint;
-            publicKey = remote.wg.publicKey;
-          }
-        ];
-      };
-    }) lib.lists.filter (remote: remote.wg != null) config.server.backups.remotes;
+          peers = [
+            {
+              persistentKeepalive = 25;
+              allowedIPs = [ "${remote.host}/32" ];
+              endpoint = remote.wg.endpoint;
+              publicKey = remote.wg.publicKey;
+            }
+          ];
+        };
+      }) (lib.lists.filter (remote: remote.wg != null) config.server.backups.remotes)
+    );
 
     systemd = {
       # Re-resolve dynamic-DNS peer endpoints when a tunnel goes stale,
       # so WireGuard reconnects instead of staying dead on a stale IP.
       services.wg-endpoint-refresh = {
         description = "Re-resolve stale WireGuard peer endpoints (dynamic DNS)";
-        after = map (remote: "wg-quick-${remote.name}.service") lib.lists.filter (
-          remote: remote.wg != null
-        ) config.server.backups.remotes;
+        after = map (remote: "wg-quick-${remote.name}.service") (
+          lib.lists.filter (remote: remote.wg != null) config.server.backups.remotes
+        );
         serviceConfig = {
           Type = "oneshot";
           ExecStart =
@@ -127,9 +131,11 @@
                   fi
               }
             ''
-            + lib.strings.join "\n" map (
-              remote: "refresh ${remote.name} ${remote.wg.publicKey} ${remote.wg.endpoint}"
-            ) lib.lists.filter (remote: remote.wg != null) config.server.backups.remotes;
+            + lib.strings.join "\n" (
+              map (remote: "refresh ${remote.name} ${remote.wg.publicKey} ${remote.wg.endpoint}") (
+                lib.lists.filter (remote: remote.wg != null) config.server.backups.remotes
+              )
+            );
         };
       };
 
@@ -147,29 +153,31 @@
   config.server.backups.home = {
     programs.rclone = {
       enable = true;
-      remotes = builtins.listToAttrs map (remote: {
-        name = remote.name;
-        value = {
-          config = {
-            type = "sftp";
-            host = remote.host;
-            port = remote.port;
-            user = remote.user;
-            key_file = remote.identityFile;
-            shell_type = "unix";
-            md5sum_command = "md5sum";
-            sha1sum_command = "sha1sum";
-          };
-          mounts."/" = {
-            enable = true;
-            mountPoint = "/mnt/${remote.name}";
-            options = {
-              args2env = true;
-              vfs-cache-mode = "writes";
+      remotes = builtins.listToAttrs (
+        map (remote: {
+          name = remote.name;
+          value = {
+            config = {
+              type = "sftp";
+              host = remote.host;
+              port = remote.port;
+              user = remote.user;
+              key_file = remote.identityFile;
+              shell_type = "unix";
+              md5sum_command = "md5sum";
+              sha1sum_command = "sha1sum";
+            };
+            mounts."/" = {
+              enable = true;
+              mountPoint = "/mnt/${remote.name}";
+              options = {
+                args2env = true;
+                vfs-cache-mode = "writes";
+              };
             };
           };
-        };
-      }) config.server.backups.remotes;
+        }) config.server.backups.remotes
+      );
     };
   };
 }
