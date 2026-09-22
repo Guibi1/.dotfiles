@@ -111,4 +111,8 @@
       ];
     };
   };
+
+  config.desktop.nixos = {
+    security.pam.services.hyprlock.enableGnomeKeyring = true;
+  };
 }

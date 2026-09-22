@@ -6,8 +6,6 @@
       polkit.enable = true;
       rtkit.enable = true;
 
-      pam.services.login.enableGnomeKeyring = true;
-
       sudo.enable = false;
       run0 = {
         enable = true;
