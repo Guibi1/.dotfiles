@@ -1,5 +1,5 @@
 { ... }: {
-  config.shell.home = {
+  config.shell.base.home = {
     home.username = "guibi";
     home.homeDirectory = "/home/guibi";
     home.stateVersion = "23.11";

@@ -1,5 +1,5 @@
 { ... }: {
-  config.shell.home = { pkgs, ... }: {
+  config.shell.base.home = { pkgs, ... }: {
     programs.fish = {
       enable = true;
       interactiveShellInit = "${pkgs.any-nix-shell}/bin/any-nix-shell fish | source";
@@ -31,7 +31,7 @@
     ];
   };
 
-  config.shell.nixos = { pkgs, ... }: {
+  config.shell.base.nixos = { pkgs, ... }: {
     programs.fish.enable = true;
     users.defaultUserShell = pkgs.fish;
   };

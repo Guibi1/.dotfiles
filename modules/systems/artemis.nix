@@ -10,7 +10,8 @@ let
     config.hardware.audio
     config.hardware.nvidia
     config.hardware.bluetooth
-    config.shell
+    config.shell.base
+    config.shell.coding
     config.desktop
   ];
 in

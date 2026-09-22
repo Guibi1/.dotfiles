@@ -5,7 +5,10 @@
   ...
 }:
 let
-  selectedModules = selectModules [ config.shell ];
+  selectedModules = selectModules [
+    config.shell.base
+    config.shell.config
+  ];
 in
 {
   config.flake.homeConfigurations.guibi = inputs.home-manager.lib.homeManagerConfiguration {

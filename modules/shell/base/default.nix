@@ -1,11 +1,24 @@
 { lib, ... }: {
-  options.shell.nixos = lib.mkOption {
+  options.shell.base.nixos = lib.mkOption {
     type = lib.types.deferredModule;
-    description = "Shell NixOS module";
+    description = "Base shell NixOS module";
   };
-  options.shell.home = lib.mkOption {
+
+  options.shell.base.home = lib.mkOption {
     type = lib.types.deferredModule;
-    description = "Shell home-manager module";
+    description = "Base shell home-manager module";
+  };
+
+  config.shell.base.nixos = { pkgs, ... }: {
+    environment.systemPackages = with pkgs; [
+      git
+      htop
+      jq
+      socat
+      xdg-utils
+      ripgrep
+      fd
+    ];
   };
 
   imports =

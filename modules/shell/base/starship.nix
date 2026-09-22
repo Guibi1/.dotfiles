@@ -1,5 +1,5 @@
 { ... }: {
-  config.shell.home = {
+  config.shell.base.home = {
     programs.starship = {
       enable = true;
       enableFishIntegration = true;

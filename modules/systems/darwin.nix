@@ -5,7 +5,10 @@
   ...
 }:
 let
-  selectedModules = selectModules [ config.shell ];
+  selectedModules = selectModules [
+    config.shell.base
+    config.shell.coding
+  ];
 in
 {
   config.flake.darwinConfigurations.Hermes = inputs.darwin.lib.darwinSystem {

@@ -7,7 +7,7 @@
 let
   selectedModules = selectModules [
     config.hardware.base
-    config.shell
+    config.shell.base
     config.server.ssh
     config.server.k3s
     config.server.sftp

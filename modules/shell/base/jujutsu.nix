@@ -1,5 +1,5 @@
 { inputs, ... }: {
-  config.shell.home = { lib, pkgs, ... }: {
+  config.shell.base.home = { lib, pkgs, ... }: {
     programs.jujutsu = {
       enable = true;
       settings = {

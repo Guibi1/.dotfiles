@@ -1,8 +1,7 @@
 { ... }: {
-  config.shell.home = {
-    programs.zoxide = {
+  config.shell.base.home = {
+    programs.eza = {
       enable = true;
-      options = [ "--cmd cd" ];
       enableBashIntegration = true;
       enableFishIntegration = true;
       enableZshIntegration = true;

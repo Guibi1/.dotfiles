@@ -1,5 +1,5 @@
 { ... }: {
-  config.shell.home = { pkgs, ... }: {
+  config.shell.base.home = { pkgs, ... }: {
     programs.fastfetch = {
       enable = true;
 
