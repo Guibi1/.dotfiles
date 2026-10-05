@@ -1,27 +1,35 @@
-{ ... }: {
-  config.hardware.base.nixos = {
+{ inputs, ... }: {
+  config.hardware.base.nixos = { pkgs, ... }: {
+    imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];
+
     boot = {
       kernelParams = [ "quiet" ];
       consoleLogLevel = 2;
+      initrd.systemd.enable = true;
 
       loader = {
-        efi.canTouchEfiVariables = true;
         timeout = 0;
-
-        limine = {
-          enable = true;
-          maxGenerations = 10;
-          secureBoot = {
-            enable = true;
-            autoGenerateKeys = true;
-            autoEnrollKeys.enable = true;
-          };
-        };
+        efi.canTouchEfiVariables = true;
       };
 
-      plymouth = {
+      lanzaboote = {
         enable = true;
-        theme = "breeze";
+        configurationLimit = 8;
+        pkiBundle = "/var/lib/sbctl";
+
+        autoGenerateKeys.enable = true;
+        autoEnrollKeys.enable = true;
+
+        measuredBoot = {
+          enable = true;
+          pcrs = [
+            0
+            1
+            2
+            4
+            7
+          ];
+        };
       };
 
       kernel.sysctl = {
@@ -29,5 +37,7 @@
         "fs.inotify.max_user_instances" = 8192;
       };
     };
+
+    environment.systemPackages = [ pkgs.sbctl ];
   };
 }
