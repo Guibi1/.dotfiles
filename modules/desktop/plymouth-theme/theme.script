@@ -1,0 +1,124 @@
+# Keep the wallpaper's aspect ratio and crop it to fill the display, like Hyprlock.
+wallpaper = Image("wallpaper.png");
+width = Window.GetWidth();
+height = Window.GetHeight();
+
+if (wallpaper.GetWidth() * height > wallpaper.GetHeight() * width)
+  background = wallpaper.Scale(Math.Int(wallpaper.GetWidth() * height / wallpaper.GetHeight()), height);
+else
+  background = wallpaper.Scale(width, Math.Int(wallpaper.GetHeight() * width / wallpaper.GetWidth()));
+
+background_sprite = Sprite(background);
+background_sprite.SetPosition(
+  Window.GetX() + (width - background.GetWidth()) / 2,
+  Window.GetY() + (height - background.GetHeight()) / 2,
+  -100
+);
+
+# Track and fill from https://github.com/fathyar/mac-plymouth, widened to match the LUKS field.
+bar.width = 320;
+bar.track_image = Image("progress_box.png").Scale(bar.width, 8);
+bar.fill_image = Image("progress_bar.png").Scale(bar.width - 2, 8);
+bar.x = Window.GetX() + (width - bar.track_image.GetWidth()) / 2;
+bar.y = Window.GetY() + height - 90 - bar.track_image.GetHeight() / 2;
+bar.track_sprite = Sprite(bar.track_image);
+bar.track_sprite.SetPosition(bar.x, bar.y, 10);
+bar.fill_sprite = Sprite();
+bar.fill_sprite.SetPosition(bar.x + 1, bar.y, 11);
+bar.fill_sprite.SetOpacity(0);
+bar.pixels = 0;
+progress_shown = 0;
+progress_target = 0;
+
+fun draw_progress() {
+  local.pixels = Math.Int(bar.fill_image.GetWidth() * progress_shown);
+  if (pixels > bar.fill_image.GetWidth())
+    pixels = bar.fill_image.GetWidth();
+  if (pixels != bar.pixels) {
+    global.bar.pixels = pixels;
+    if (pixels > 0) {
+      bar.fill_sprite.SetImage(bar.fill_image.Scale(pixels, bar.fill_image.GetHeight()));
+      bar.fill_sprite.SetOpacity(1);
+    }
+  }
+}
+
+# The Hyprlock input is 320 x 40, centered 70 pixels above the bottom edge.
+field.image = Image("input-field.png");
+field.x = Window.GetX() + (width - field.image.GetWidth()) / 2;
+field.y = Window.GetY() + height - 90 - field.image.GetHeight() / 2;
+field.sprite = Sprite(field.image);
+field.sprite.SetPosition(field.x, field.y, 20);
+field.sprite.SetOpacity(0);
+
+field.placeholder_image = Image.Text("Mot de passe", 1, 1, 1, 1, "Cascadia Code PL 10");
+field.placeholder = Sprite(field.placeholder_image);
+field.placeholder.SetPosition(
+  Window.GetX() + (width - field.placeholder_image.GetWidth()) / 2,
+  Window.GetY() + height - 90 - field.placeholder_image.GetHeight() / 2,
+  21
+);
+field.placeholder.SetOpacity(0);
+
+field.dot_image = Image.Text("●", 1, 1, 1, 1, "Cascadia Code PL 14");
+for (i = 0; i < 16; i++) {
+  field.dots[i] = Sprite(field.dot_image);
+  field.dots[i].SetOpacity(0);
+}
+
+mode = "normal";
+
+fun refresh() {
+  if (mode == "normal") {
+    if (progress_shown < 0.9)
+      global.progress_shown += 0.001;
+    if (progress_target > progress_shown)
+      global.progress_shown += Math.Min(0.001, progress_target - progress_shown);
+    draw_progress();
+  }
+}
+
+fun boot_progress(duration, progress) {
+  global.progress_target = Math.Max(progress_target, Math.Min(1, Math.Max(0, progress)));
+}
+
+fun display_normal() {
+  global.mode = "normal";
+  bar.track_sprite.SetOpacity(1);
+  if (bar.pixels > 0)
+    bar.fill_sprite.SetOpacity(1);
+  field.sprite.SetOpacity(0);
+  field.placeholder.SetOpacity(0);
+  for (i = 0; i < 16; i++)
+    field.dots[i].SetOpacity(0);
+}
+
+fun display_password(prompt, bullets) {
+  global.mode = "password";
+  bar.track_sprite.SetOpacity(0);
+  bar.fill_sprite.SetOpacity(0);
+  field.sprite.SetOpacity(1);
+
+  local.count = Math.Min(16, Math.Max(0, bullets));
+  if (count == 0)
+    field.placeholder.SetOpacity(0.7);
+  else
+    field.placeholder.SetOpacity(0);
+
+  for (i = 0; i < 16; i++) {
+    if (i < count) {
+      field.dots[i].SetPosition(
+        Window.GetX() + width / 2 - ((count - 1) * 18 + field.dot_image.GetWidth()) / 2 + i * 18,
+        Window.GetY() + height - 90 - field.dot_image.GetHeight() / 2,
+        22
+      );
+      field.dots[i].SetOpacity(0.7);
+    } else
+      field.dots[i].SetOpacity(0);
+  }
+}
+
+Plymouth.SetRefreshFunction(refresh);
+Plymouth.SetBootProgressFunction(boot_progress);
+Plymouth.SetDisplayNormalFunction(display_normal);
+Plymouth.SetDisplayPasswordFunction(display_password);
