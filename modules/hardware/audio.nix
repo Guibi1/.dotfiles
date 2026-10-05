@@ -19,7 +19,6 @@
 
   config.hardware.audio.home = { lib, ... }: {
     services.playerctld.enable = true;
-    services.easyeffects.enable = true;
 
     wayland.windowManager.hyprland.settings = {
       bind = [
