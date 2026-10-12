@@ -29,7 +29,7 @@
         config,
         selectModules,
         ...
-      }@top:
+      }:
       {
         systems = [
           "x86_64-linux"
@@ -73,7 +73,7 @@
             pkgs = inputs.nixpkgs.legacyPackages.${system};
             shellHome = inputs.home-manager.lib.homeManagerConfiguration {
               inherit pkgs;
-              modules = (selectModules [ top.config.shell ]).home;
+              modules = (selectModules [ config.shell ]).home;
             };
           in
           lib.mkIf (system == "x86_64-linux") {

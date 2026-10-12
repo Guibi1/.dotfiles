@@ -35,15 +35,6 @@
       python3
       ruff
       uv
-
-      # Java
-      graalvmPackages.graalvm-ce
-      jdt-language-server
-
-      # Embedded
-      espup
-      espflash
-      probe-rs-tools
     ];
   };
 

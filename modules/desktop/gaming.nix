@@ -1,10 +1,9 @@
 { ... }: {
   config.desktop.home = { pkgs, ... }: {
     home.packages = with pkgs; [
-      ((modrinth-app.override { jdks = [ graalvmPackages.graalvm-oracle ]; }).overrideAttrs (attrs: {
+      ((modrinth-app.override { jdks = [ graalvmPackages.graalvm-ce ]; }).overrideAttrs (attrs: {
         buildCommand = attrs.buildCommand + ''
-          wrapProgram "$out/bin/ModrinthApp" \
-            --set __NV_DISABLE_EXPLICIT_SYNC 1
+          wrapProgram "$out/bin/ModrinthApp" --set __NV_DISABLE_EXPLICIT_SYNC 1
         '';
       }))
     ];
