@@ -11,7 +11,6 @@
 
   config.shell.coding.home = { pkgs, ... }: {
     home.packages = with pkgs; [
-      yubikey-manager
       mosh
       hyperfine
       tokei
