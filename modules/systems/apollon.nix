@@ -23,25 +23,29 @@ in
       {
         networking.hostName = "Apollon";
 
-        networking.interfaces.eno1.ipv4.addresses = [
-          {
-            address = "192.168.18.222";
-            prefixLength = 24;
-          }
-        ];
-        networking.defaultGateway = "192.168.18.1";
-        networking.nameservers = [
-          "1.1.1.1"
-          "8.8.8.8"
-        ];
-
-        boot.supportedFilesystems = [ "zfs" ];
-        boot.zfs = {
-          forceImportRoot = false;
-          extraPools = [
-            "SSD"
-            "Data"
+        networking = {
+          interfaces.eno1.ipv4.addresses = [
+            {
+              address = "192.168.18.222";
+              prefixLength = 24;
+            }
           ];
+          defaultGateway = "192.168.18.1";
+          nameservers = [
+            "1.1.1.1"
+            "8.8.8.8"
+          ];
+        };
+
+        boot = {
+          supportedFilesystems = [ "zfs" ];
+          zfs = {
+            forceImportRoot = false;
+            extraPools = [
+              "SSD"
+              "Data"
+            ];
+          };
         };
 
         system.stateVersion = "23.11";

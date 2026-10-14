@@ -2,21 +2,26 @@
 {
   options.server.k3s.nixos = lib.mkOption {
     type = lib.types.deferredModule;
-    description = "K3S NixOS module";
+    description = "K3s NixOS module";
   };
 
-  config.server.k3s.nixos = {
+  config.server.k3s.nixos = { pkgs, ... }: {
     services.k3s = {
       enable = true;
       role = "server";
       clusterInit = true;
       extraFlags = "--service-node-port-range=27000-30000";
     };
-    systemd.tmpfiles.rules = [ "L+ /usr/local/bin - - - - /run/current-system/sw/bin/" ];
 
-    networking.firewall.allowedTCPPorts = [ 6443 ];
-    networking.firewall.allowedUDPPorts = [ 27020 ];
-    networking.hostId = "6d57a4c5";
+    networking = {
+      hostId = "6d57a4c5";
+      firewall.allowedTCPPorts = [ 6443 ];
+    };
+
+    environment = {
+        systemPackages = with pkgs; [ fluxcd seaweedfs ];
+        sessionVariables.KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
+    };
 
     systemd = {
       services.zfs-archive-latest = {
@@ -36,5 +41,7 @@
         };
       };
     };
+
+    systemd.tmpfiles.rules = [ "L+ /usr/local/bin - - - - /run/current-system/sw/bin/" ];
   };
 }
