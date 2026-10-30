@@ -6,8 +6,4 @@
       installRemoteServer = true;
     };
   };
-
-  config.desktop.nixos = {
-    programs.nix-ld.enable = true;
-  };
 }

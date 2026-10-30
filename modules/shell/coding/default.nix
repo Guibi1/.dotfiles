@@ -37,6 +37,10 @@
     ];
   };
 
+  config.shell.coding.nixos = {
+    programs.nix-ld.enable = true;
+  };
+
   imports =
     let
       dir = ./.;
