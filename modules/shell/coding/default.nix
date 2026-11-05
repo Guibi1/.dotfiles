@@ -17,11 +17,10 @@
 
       # TypeScript
       bun
-      nodejs_22
+      nodejs_26
 
       # Rust
       rustup
-      binaryen
 
       # Go
       go
@@ -37,8 +36,12 @@
     ];
   };
 
-  config.shell.coding.nixos = {
+  config.shell.coding.nixos = { pkgs, ... }: {
     programs.nix-ld.enable = true;
+
+    environment.systemPackages = with pkgs; [
+      gcc
+    ];
   };
 
   imports =
