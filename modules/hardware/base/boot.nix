@@ -5,7 +5,6 @@
     boot = {
       kernelParams = [ "quiet" ];
       consoleLogLevel = 2;
-      initrd.systemd.enable = true;
 
       loader = {
         timeout = 0;

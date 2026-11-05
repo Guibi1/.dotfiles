@@ -4,12 +4,12 @@
     let
       openvfs = pkgs.stdenv.mkDerivation (_: {
         pname = "openvfs";
-        version = "0.1.0-unstable-2026-07-22";
+        version = "0.1.0-unstable-2026-11-05";
 
         src = pkgs.fetchFromGitHub {
           owner = "opencloud-eu";
           repo = "openvfs";
-          rev = "525d8c6c9158c12604b0aaaedb6bae532804328d";
+          rev = "c20c0fe4925607cb835a2d98f29632e954c558dd";
           hash = "sha256-O/or88niQACm7oA9MGqHZe+cw9XTAzUKhfkBg3fGUz8=";
         };
 
@@ -46,11 +46,11 @@
     {
       home.packages = with pkgs; [
         (opencloud-desktop.overrideAttrs (attrs: {
-          version = "4.0.0-unstable-2026-07-22";
+          version = "4.0.0-unstable-2026-11-05";
           src = pkgs.fetchFromGitHub {
             owner = "opencloud-eu";
             repo = "desktop";
-            rev = "33aa83df0f2be99bfd11d801c0ee44ce7a6a2ddf";
+            rev = "14976391df36fe7174f4cdffeff022f6fedd7213";
             hash = "sha256-5wVxbQ5rpQbIjwAXVPbAkWn/PY+BxgPjvBFVilAtXPI=";
           };
           buildInputs = attrs.buildInputs ++ [ openvfs ];
