@@ -2,7 +2,6 @@
   config.desktop.home =
     {
       pkgs,
-      config,
       lib,
       ...
     }:
@@ -29,39 +28,49 @@
             )
           );
 
-      krispDiscord = pkgs.discord.overrideAttrs (attrs: {
-        postFixup =
-          (attrs.postFixup or "")
-          + ''${lib.getExe pkgs.fd} -g "discord_krisp.node" "$out/opt/Discord/modules" -x ${krispPatcher} {}'';
+      krispDiscord =
+        (pkgs.discord.override {
+          useFHSEnv = false;
+          withOpenASAR = true;
+        }).overrideAttrs
+          (attrs: {
+            postFixup =
+              (attrs.postFixup or "")
+              + ''${lib.getExe pkgs.fd} -g "discord_krisp.node" "$out/opt/Discord/modules" -x ${krispPatcher} {}'';
 
-        stageModules = pkgs.writeShellScript "discord-stage-mine" ''
-          store_modules="$1"
-          modules_dir="${config.xdg.configHome}/discord/${attrs.version}/modules"
+            stageModules = pkgs.writeShellScript "discord-stage-mine" ''
+              store_modules="$1"
+              modules_dir="''${DISCORD_USER_DATA_DIR:-''${XDG_CONFIG_HOME:-$HOME/.config}}/discord/${attrs.version}/modules"
 
-          mkdir -p "$modules_dir"
-          for m in "$store_modules"/*; do
-            dest="$modules_dir/$(basename "$m")"
+              if [ -L "$modules_dir" ]; then
+                rm "$modules_dir"
+              fi
+              mkdir -p "$modules_dir"
+              for m in "$store_modules"/*; do
+                dest="$modules_dir/$(basename "$m")"
 
-            if [ -L "$dest" ]; then
-              rm "$dest"
-            fi
+                if [ -L "$dest" ]; then
+                  rm "$dest"
+                fi
 
-            ${lib.getExe pkgs.rsync} -a --checksum --delete "$m/" "$dest"
-          done
+                ${lib.getExe pkgs.rsync} -a --checksum --delete "$m/" "$dest"
+              done
 
-          chmod -R u+w "$modules_dir"
+              chmod -R u+w "$modules_dir"
 
-          echo '${
-            builtins.toJSON (lib.mapAttrs (_: mod: { installedVersion = mod; }) attrs.passthru.moduleVersions)
-          }' \
-            > "$modules_dir/installed.json"
-        '';
-      });
+              echo '${
+                builtins.toJSON (lib.mapAttrs (_: mod: { installedVersion = mod; }) attrs.passthru.moduleVersions)
+              }' \
+                > "$modules_dir/installed.json"
+            '';
+          });
     in
     {
       home.packages = [
-        (krispDiscord.override {
+        (pkgs.discord.override {
+          useFHSEnv = false;
           withOpenASAR = true;
+          unwrappedDiscord = krispDiscord;
         })
       ];
 
