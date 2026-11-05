@@ -5,12 +5,21 @@
     description = "K3s NixOS module";
   };
 
+  options.server.k3s.home = lib.mkOption {
+    type = lib.types.deferredModule;
+    description = "K3s home-manager module";
+  };
+
   config.server.k3s.nixos = { pkgs, ... }: {
     services.k3s = {
       enable = true;
       role = "server";
       clusterInit = true;
-      extraFlags = "--service-node-port-range=27000-30000";
+      extraFlags = [
+        "--service-node-port-range=27000-30000"
+        "--write-kubeconfig-group=wheel"
+        "--write-kubeconfig-mode=0640"
+      ];
     };
 
     networking = {
@@ -19,8 +28,11 @@
     };
 
     environment = {
-        systemPackages = with pkgs; [ fluxcd seaweedfs ];
-        sessionVariables.KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
+      systemPackages = with pkgs; [
+        fluxcd
+        seaweedfs
+      ];
+      sessionVariables.KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
     };
 
     systemd = {
@@ -43,5 +55,11 @@
     };
 
     systemd.tmpfiles.rules = [ "L+ /usr/local/bin - - - - /run/current-system/sw/bin/" ];
+  };
+
+  config.server.k3s.home = { lib, pkgs, ... }: {
+    programs.mcp.servers.k8s = {
+      command = lib.getExe pkgs.mcp-k8s-go;
+    };
   };
 }

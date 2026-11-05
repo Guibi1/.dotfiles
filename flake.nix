@@ -19,6 +19,9 @@
     cme.url = "github:Guibi1/cme";
     cme.inputs.nixpkgs.follows = "nixpkgs";
     hyprland.url = "github:hyprwm/Hyprland";
+
+    ponytail.url = "github:DietrichGebert/ponytail";
+    ponytail.flake = false;
   };
 
   outputs =
