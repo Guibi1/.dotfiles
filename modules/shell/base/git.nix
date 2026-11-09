@@ -14,5 +14,6 @@
     };
 
     programs.gpg.enable = true;
+    programs.gh.enable = true;
   };
 }
