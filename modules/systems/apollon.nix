@@ -50,8 +50,16 @@ in
         };
 
         system.stateVersion = "23.11";
-        home-manager.users.guibi = {
+        users.users.guibi.linger = true;
+        home-manager.users.guibi = { pkgs, ... }: {
           imports = selectedModules.home;
+          programs.t3code = {
+            enable = true;
+            package = pkgs.callPackage ../../packages/t3code-cli/package.nix {
+              enableJujutsu = true;
+            };
+            server.enable = true;
+          };
           programs.git.signing.key = "1F1C47D520393678";
         };
       }
